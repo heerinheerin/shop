@@ -15,4 +15,5 @@ public class ItemDto {
     private String sellStatCd;
     private LocalDateTime RegTime;
     private LocalDateTime updateTime;
+
 }
