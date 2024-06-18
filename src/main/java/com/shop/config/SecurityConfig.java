@@ -32,6 +32,9 @@ public class SecurityConfig {
                 .usernameParameter("email")
                 .failureUrl("/members/login/error")
         );
+
+        http.exceptionHandling(exception->exception
+                .authenticationEntryPoint(new CustomAuthenticationEntryPoint()));
     return http.build();
     }
     @Bean
