@@ -44,21 +44,22 @@ public class MemberController {
         //만약 같은 메일이 있으면 아래로 들어감.
         catch (IllegalStateException e){
             model.addAttribute("errorMessage", e.getMessage());
-
             return "member/memberForm";
         }
 
         return  "redirect:/";
     }
+
     @GetMapping(value = "/login")
-    public String loginMember() {
-        return "/member/memberLoginForm";
+    public String loginMember(){
+        return  "/member/memberLoginForm";
     }
+
     @GetMapping(value = "/login/error")
     public String loginError(Model model){
-
-        model.addAttribute("loginErrorMsg","아이디 또는 비밀번호를 확인해주세요");
-                return "/member/memberLoginForm";
+        model.addAttribute("loginErrorMsg", "아이디 또는 비밀번호를 확인해주세요.");
+        return "/member/memberLoginForm";
     }
+
 
 }
