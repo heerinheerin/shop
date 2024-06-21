@@ -67,7 +67,7 @@ public class ItemController {
         return "item/itemForm";
     }
 
-    @PostMapping(value = "/admin/item/{itemId}")
+    @PostMapping(value = "/admin/item/{itemId}") //포스트맵핑은 저장
     public String  itemUpdate(@Valid ItemFormDto itemFormDto, BindingResult bindingResult,
                               @RequestParam("itemImgFile") List<MultipartFile> itemImgFileList,
                               Model model){
@@ -102,5 +102,30 @@ public class ItemController {
         model.addAttribute("maxPage", 5);
         return "item/itemMng";
     }
+
+    @GetMapping(value = "/item/{itemId}")
+    public String itemDtl(Model model, @PathVariable("itemId") Long itemId) {
+        ItemFormDto itemFormDto = itemService.getItemDtl(itemId);
+        model.addAttribute("item", itemFormDto);
+        return "item/itemDtl";
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 }
