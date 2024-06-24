@@ -1,6 +1,7 @@
 package com.shop.service;
 
 import com.shop.constant.ItemSellStatus;
+import com.shop.constant.OrderStatus;
 import com.shop.dto.OrderDto;
 import com.shop.entity.Item;
 import com.shop.entity.Member;
@@ -20,10 +21,10 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
+
 @SpringBootTest
 @Transactional
 @TestPropertySource(locations = "classpath:application-test.properties")
-
 class OrderServiceTest {
     @Autowired
     private OrderRepository orderRepository;
@@ -36,7 +37,7 @@ class OrderServiceTest {
     @Autowired
     private MemberRepository memberRepository;
 
-    public Item saveItem(){
+    public Item saveItem() {
         Item item = new Item();
         item.setItemNm("테스트상품");
         item.setPrice(10000);
@@ -45,16 +46,18 @@ class OrderServiceTest {
         item.setStockNumber(100);
         return itemRepository.save(item);
     }
-    public Member saveMember(){
+
+    public Member saveMember() {
         Member member = new Member();
         member.setEmail("test@tes.com");
         return memberRepository.save(member);
     }
+
     @Test
     @DisplayName("주문 테스트")
-    public void order(){
+    public void order() {
         Item item = saveItem();
-        Member member=saveMember();
+        Member member = saveMember();
 
         OrderDto orderDto = new OrderDto();
         orderDto.setCount(10);
@@ -69,6 +72,23 @@ class OrderServiceTest {
         assertEquals(totalPrice, order.getTotalPrice());
     }
 
+    @Test
+    @DisplayName("주문 취소 테스트")
+    public void cancelOrder(){
+        Item item = saveItem();
+        Member member = saveMember();
+
+        OrderDto orderDto = new OrderDto();
+        orderDto.setCount(10);
+        orderDto.setItemId(item.getId());
+        Long orderId = orderService.order(orderDto, member.getEmail());
+
+        Order order = orderRepository.findById(orderId)
+                .orElseThrow(EntityNotFoundException::new);
+        orderService.cancelOrder(orderId);
+        assertEquals(OrderStatus.CANCEL, order.getOrderStatus());
+        assertEquals(100, item.getStockNumber());
+    }
 }
 
 

@@ -1,5 +1,6 @@
 package com.shop.entity;
 
+import com.shop.dto.CartItemDto;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -23,4 +24,14 @@ public class Cartitem extends BaseEntity{
 
     private Item item;
     private int count;
+
+    public static Cartitem createCartItem(Cart cart, Item item, int count) {
+        Cartitem cartItem = new Cartitem();
+        cartItem.setCart(cart);
+        cartItem.setItem(item);
+        cartItem.setCount(count);
+        return cartItem;
+
+    }
+    public void addCount(int count) { this.count += count; }
 }
