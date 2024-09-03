@@ -1,74 +1,583 @@
 <!DOCTYPE html>
-<!--타임리프 임포트-->
 <html xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{layouts/layout1}">
-<!--사용자 CSS 추가-->
-<th:block layout:fragment="css">
-    <style>
-        .error{
-        color:#bd2130;
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:sec="http://www.w3.org/1999/xhtml"
+      xmlns="http://www.w3.org/1999/html">
+<head>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css">
+    <link th:href="@{/css/layout1.css}" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
+    <script th:inline="javascript">
+        $(document).ready(function () {
+                var errorMessage = [[${errorMessage}]];
+                if (errorMessage != null) {
+                    alert(errorMessage);
+                }
+            });
+
+
+
+    </script>
+    <style th:inline="css">
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap');
+
+          body {
+              font-family: "Noto Sans KR", sans-serif;
+              overflow: auto;
+              position: relative;
+              padding-top: 0;
+              box-sizing: border-box;
+          }
+
+          .header {
+              z-index: 10;
+              background-color: rgb(255 255 255 / 70%);
+              backdrop-filter: blur(10px);
+             /* box-shadow: 0 1px 15px rgba(240, 237, 233, 0.5);*/
+              position: fixed;
+              top: 0;
+              left: 0;
+              right: 0;
+              height: 180px;
+             /* border-bottom: 1px solid #eeeeee;*/
+              font-weight: bold;
+              flex-direction: column; /* 수직 배치 */
+              align-items: center;
+          }
+           .home {
+            position: absolute;
+            top: -5px;
+            left: 950px;
         }
-        .wrapper {
-      max-width: 360px;
-      margin: 0 auto;
-    }
 
-    .button {
-      display: block;
-      color: white;
-      padding: 1rem;
-      text-decoration: none;
-      margin: 1rem 0;
-      transition: all 0.3s ease;
-    }
-
-    .button--google {
-      background-color: #dd4b39;
-    }
-    .button--kakao {
-      background-color: #ffd700;
-    }
-    .button--naver {
-      background-color: #32CD32;
-    }
-
-    .button--google:hover {
-      background-color: #b53a2e;
-      /* darken(#dd4b39, 10%)의 결과값 */
-    }
+            li {
+                z-index: 100000;
+                list-style-type: none;
+            }
 
 
-    .button--google:before {
-      content: '\f1a0';
-      font-family: 'FontAwesome';
-      padding-right: 1rem;
-    }
+  .dropdown2{
+z-index: 100000;
+                position: fixed;
+                display: flex;
+                margin-top: 187px;
+                margin-left:400px;
+                flex-direction: row; /* 수평 배치 */
+    white-space: nowrap; /* 줄 바꿈 방지 */
+}
+
+  .menu_pan {
+            display: none; /* 기본적으로 숨김 */
+            position: absolute;
+            width:975.5px;
+            left:72px;
+            font-size: 15px;
+            top: 32px; /* 적절한 위치 */
+            border-bottom: 1px solid #eeeeee;
+            background-color: rgb(255 255 255 / 70%);
+            box-shadow: 0 1px 30px rgba(240, 237, 233, 0.596);
+            backdrop-filter: blur(10px);
+            z-index: 1000; /* 다른 요소 위에 표시 */
+        }
+        .dropdown2:hover .menu_pan {
+            display: flex; /* 드롭다운 메뉴 표시 */
+        }
+        .menu_pan2{
+        padding-top:10px;
+        }
+        .menu_pan2 li:hover{
+          color:	#87ceeb;
+        }
+
+.a1, .a2, .a3 {
+    text-decoration: none;
+    position: relative;
+    left:95px;
+}
+
+.a1::after, .a2::after, .a3::after {
+    content: ""; /* 가상 요소를 생성 */
+    position: absolute; /* 절대 위치 설정 */
+    left: 50%; /* 중앙 정렬 */
+    bottom: 29px; /* 텍스트 아래 위치 */
+    width: 0; /* 초기 너비 0 */
+    height: 2px; /* 줄의 높이 */
+    background-color:		#b0e0e6; /* 줄 색상 */
+    transition: width 0.3s ease, left 0.3s ease; /* 너비와 위치 변화에 애니메이션 추가 */
+}
+
+.a1:hover::after, .a2:hover::after, .a3:hover::after {
+    width: 100%; /* 마우스 오버 시 너비를 100%로 변경 */
+    left: 0; /* 줄이 왼쪽으로 이동 */
+}
+
+
+          /*================================여기까지 헤더==============================  */
+
+
+
+
+      .box {
+          z-index: 100000;
+           position: fixed;
+           width: 50%;
+           height: 0;
+           opacity: 1; /* 기본 상태의 불투명도 */
+       }
+
+       #boxA {
+           z-index: 100000;
+           left: 0;
+           top: 0;
+           background:	#fff8e2; /* 배경색 */
+
+           animation: heightAni 2s forwards, slideUpAndFadeOut 3s 2s forwards;
+       }
+
+       #boxB {
+           z-index: 100000;
+           right: 0;
+           bottom: 0;
+           background: #c8e6e9;
+           animation: heightAni 2s forwards, slideDownAndFadeOut 3s 2s forwards;
+       }
+
+       @keyframes heightAni {
+           z-index: 100000;
+           0% { height: 0; }
+           100% { height: 100%; }
+       }
+
+       @keyframes slideUpAndFadeOut {
+           z-index: 100000;
+           0% { height: 100%; top: 0; opacity: 1; }
+           100% { height: 0; top: -100%; opacity: 0; }
+       }
+
+       @keyframes slideDownAndFadeOut {
+           z-index: 100000;
+           0% { height: 100%; bottom: 0; opacity: 1; }
+           100% { height: 0; bottom: -100%; opacity: 0; }
+       }
+
+       #port, #go {
+           z-index: 100000;
+           position: fixed;
+           transform: translate(-50%, -50%);
+
+       }
+
+       #port {
+           z-index: 100000;
+        animation: leftAni 2s forwards, fadeOut 3s 2s forwards;
+           left: 50%;
+           top: 50%;
+
+       }
+
+       #go {
+           z-index: 100000;
+          animation: rightAni 2s forwards, fadeOut 3s 2s forwards;
+           right: 50%;
+           top: 50%;
+
+       }
+           @keyframes leftAni {
+               z-index: 100000;
+           0% {}
+           100% { left: 35%; }
+       }
+
+       @keyframes rightAni {
+           z-index: 100000;
+           0% {}
+           100% { right: 20%; }
+       }
+
+
+       @keyframes fadeOut {
+           z-index: 100000;
+           0% { opacity: 1; }
+           100% { opacity: 0; }
+       }
+/*================================여기까지 첫 슬라이더 박스==============================  */
+.form-signin {
+          position: fixed;
+          opacity: 0; /* 처음에는 안 보이도록 설정 */
+         animation: fadeIn 3s forwards; /* 애니메이션 지속 시간을 3초로 설정 */
+         animation-delay: 2.5s; /* 2초 지연 후 애니메이션 시작 */
+      }
+
+     .loginLogo {
+
+     position:absolute;
+       z-index: 100000;
+         margin-left:495px;
+          margin-top:5px;
+          display: block;
+          height: 4.5rem;
+          background-size: 100%;
+
+      }
+      .loginback{
+       margin-left:191px;
+       margin-top:30px;
+      background-color:#ffffff;
+      width:180px;
+height:25px;
+ border-bottom: 2px solid rgba(250, 232, 170, 50%);
+ border-left: 2px solid rgba(250, 232, 170, 50%);
+  border-right: 2px solid rgba(250, 232, 170, 50%);
+
+      }
+
+      @keyframes fadeIn {
+          0% { opacity: 0; }
+          100% { opacity: 1; }
+      }
+      /*================================여기까지 로고==============================  */
+  .loginbox {
+            position: fixed;
+            margin-top: 210px;
+            margin-left: 0px;
+        }
+
+    .loginbox2 {
+    background-color: #ffffff;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 1px 15px rgba(240, 237, 233, 0.5);
+    margin-top: 7px;
+    margin-left: 469px;
+    width: 982px;
+    height: 575px;
+    border: 3px solid transparent;
+    border-image: linear-gradient(50deg, #c8e6e9 30%, #fff8e2 67%, #c8e6e9 4%);
+    border-image-slice: 1;
+    position: relative;
+      transition-duration: 1s;
+  transition-timing-function: ease-in;
+  transition-duration: 1s;
+
+}
+
+         /*================================가운데 메인 상자==============================  */
+
+.email-login{
+    position: fixed;
+    margin-left: 210px;
+    margin-top:170px;
+            width: 560px;
+}
+
+.pw-login{
+ position: fixed;
+  margin-top:290px;
+         margin-left: 210px;
+            width: 560px;
+}
+.email-login input[type="email"] {
+text-align:center;
+    border: none;
+    border-top: 2px solid #fff8e2;
+    box-shadow: 0px -4px 2px #d3d3d3; /* 블러 반경을 줄이고 색상을 어두운 색으로 설정 */
+     border-bottom-right-radius: 0;
+     border-bottom-left-radius: 0; /* 둥글게 하지 않도록 설정 */
+      border-top-left-radius: 20px;
+       border-top-right-radius: 0; /* 둥글게 하지 않도록 설정 */
+}
+
+.pw-login input[type="password"] {
+text-align:center;
+    border: none;
+    border-bottom: 2px solid #c8e6e9;
+    box-shadow: 0 4px 2px 	#d3d3d3; /* 블러 반경을 줄이고 색상을 어두운 색으로 설정 */
+    border-bottom-right-radius: 20px;
+     border-bottom-left-radius: 0; /* 둥글게 하지 않도록 설정 */
+      border-top-left-radius: 0;
+       border-top-right-radius: 0; /* 둥글게 하지 않도록 설정 */
+}
+
+
+            .email-label {
+             position: fixed;
+            margin-top: 125px;
+            margin-left: 410px;
+                color: #a9a9a9
+
+            }
+           .pw-label {
+
+             position: fixed;
+            margin-top: 255px;
+            margin-left:405px;
+                color: #a9a9a9
+            }
+
+.error {
+ position: fixed;
+margin-top: 400px;
+            margin-left:390px;
+font-size: 0.8rem;
+color: #ff322e;
+word-break: keep-all;
+}
+ /* --------------------------------- 여기까지 이메일,비번입력창 ------------------------------------ */
+
+            .login-btn {
+            position: fixed;
+            margin-top: 370px;
+            margin-left:390px;
+                display: block;
+                width: 200px;
+                height:30px;
+                padding: auto;
+                font-size: 1rem;
+                font-weight: 500;
+                text-align: center;
+                color: 	#d3d3d3;
+                background-color: #ffffff;
+              border: 1px solid #dcdcdc;
+}
+
+            .login-btn:hover {
+             box-shadow: 0px 2px 1px #d3d3d3;
+                  border: 2px solid #fff8e2;
+                 color:#c8e6e9;
+            }
+
+
+            .member {
+            position: fixed;
+          background-color:#ffffff;
+             width: 200px;
+             height: 150px;
+                margin-top:410px ;
+                 margin-left:776px;
+                 color:gray;
+            }
+
+               .member-text{
+             position: fixed;
+            margin-top:115px;
+              margin-left:130px;
+              color:#000000;
+              text-decoration:none;
+             font-weight: bold;
+            }
+
+.member2 {
+  z-index: 1;
+  position: absolute;
+  background-color: rgba(0, 0, 0, 0);
+  width: 150px;
+  height: 120px;
+  margin-left: 826.1px;
+  margin-top: 449px;
+  overflow: hidden; /* 자식 요소가 overflow 되지 않도록 */
+}
+
+.member2::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+ background: rgba(232, 232, 232, 0.3);
+  transform-origin: center;
+  clip-path: polygon(0 100%, 100% 100%, 100% 0);
+  z-index: 1;
+
+}
+
+.member2::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #ffffff;
+  transform-origin: center; /* 중앙에서 접히도록 설정 */
+  clip-path: polygon(0 100%, 100% 100%, 100% 0);
+  z-index: 2;
+  transition: clip-path 0.1s ease, background-color 0.1s ease, border 0.1s ease;
+
+}
+
+.member2:hover::after {
+  clip-path: polygon(0 0, 100% 0, 0 100%);
+  transform: scaleZ(0.9);
+  background-color: #ffffff;
+   border: 2px solid transparent;
+    border-image: linear-gradient(50deg, #fff8e2 30%, #c8e6e9 70%);
+    border-image-slice: 1;
+
+}
+
+        .img2{
+        z-index: 2;
+          position: fixed;
+  margin-left: 800px;
+  margin-top:451px;
+        }
+
+        .img1{
+         z-index: 1;
+          position: fixed;
+  margin-left: 821px;
+  margin-top:510px;
+   animation: sparkle 1s ease-in-out forwards; /* 애니메이션 적용 후 상태 유지 */
+                animation-iteration-count: 30; /* 애니메이션 반복 횟수 */
+        }
+        @keyframes sparkle {
+                0%, 100% {
+                    opacity: 1; /* 처음과 끝에서 완전 불투명 */
+                }
+                50% {
+                    opacity: 0.4; /* 중간에서 반투명 */
+                }
+            }
+
+        /* --------------------------------------------- 여기까지 회원가입 ----------------------------------------- */
+
+          .button {
+          position: absolute;
+              display: inline-block;
+                color: white;
+                padding: 3px;
+                text-decoration: none;
+                margin-top: 465px;
+                transition: all 0.3s ease;
+                border-radius: 0.25rem;
+                text-align: center;
+            }
+
+            .button-google {
+                position: relative;
+                margin-left: 52px;
+
+            }
+
+            .button-google:hover {
+                color: #b53a2e;
+            }
+
+            .button-kakao {
+              position: relative;
+                margin-left: 17px;
+
+
+            }
+
+            .button-kakao:hover {
+                color: #e3c300;
+            }
+
+            .button-naver {
+              position: relative;
+                margin-left: 20px;
+            }
+
+            .button-naver:hover {
+                color: #2cb82c;
+
+            }
+
 
 
     </style>
-</th:block>
-<div layout:fragment="content">
-    <form action="/members/login" role="form" method="post">
-        <div class="form-group">
-            <label th:for="email">이메일 주소</label>
-            <input type="email" name="email" class="form-control" placeholder="이메일을 입력해주세요.">
-        </div>
+</head>
 
-        <div class="form-group">
-            <label th:for="password">비밀번호</label>
-            <input type="password" name="password" class="form-control" placeholder="비밀번호를 입력해주세요.">
-        </div>
 
-     <p th:if="${loginErrorMsg}" class="error" th:text="${loginErrorMsg}"></p>
-        <button class="btn btn-primary">로그인</button>
+<body>
 
-        <button type="button" class="btn btn-primary" onclick="location.href='/members/new'">회원가입</button>
-        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
 
-    </form>
-    <a href="/oauth2/authorization/google" class="button button--google">Google Login</a>
-    <a href="/oauth2/authorization/kakao" class="button button--kakao"> Kakao Login</a>
-    <a href="/oauth2/authorization/naver" class="button button--naver">Naver Login</a>
+<div id="boxA" class="box"></div>
+<div id="boxB" class="box"></div>
+<div>
+    <h2 id="port"> <img th:src="@{/css/images/loginlogo1.png}" height="90"> </h2>
+    <h2 id="go"> <img th:src="@{/css/images/loginlogo2.png}" height="90"></h2>
 </div>
+<!-- =================================================================== -->
+<main class="form-signin">
+
+
+    <div class="header">
+    </div>
+
+    <div class="dropdown2">
+        <a href="" class="a1 px-2 link-secondary" >키즈완구/교구</a>
+        <a href="" class="a2 px-2 link-secondary">역할놀이</a>
+        <a href="" class="a3 px-2 link-secondary">목욕/물놀이</a>
+
+
+
+        <a class="loginLogo">
+            <img th:src="@{/css/images/login.png}" height="55">
+        </a>
+        <div class="loginback"></div>
+
+        <a class="home" href="/">
+            <img th:src="@{/css/images/home.png}" height="28">
+        </a>
+
+    </div>
+    <div class="loginbox">
+        <div class="loginbox2">
+
+            <form action="/members/login" role="form" method="post">
+
+                <div class="email-login">
+                    <input type="email" class="form-control" id="floatingInput" name="email">
+                </div>
+                <div class="email-label">
+                    <label th:for="email">
+                        <img th:src="@{/css/images/logindeco.png}" height="20"> 이메일을 입력하세요</label> </div>
+
+                <div class="pw-login">
+                    <input type="password" class="form-control" id="floatingPassword" name="password">
+                </div>
+                <div class="pw-label">
+                    <label th:for="password">
+                        <img th:src="@{/css/images/logindeco.png}" height="20"> 비밀번호를 입력하세요</label> </div>
+
+
+                <a href="/"><p th:if="${loginErrorMsg}" class="error" th:text="${loginErrorMsg}"></p></a>
+                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+                <button type="submit" class="login-btn"> 로그인</button>
+            </form>
+
+            <img th:src="@{/css/images/sign-up.png}" class="img2" height="50">
+            <img th:src="@{/css/images/click.png}" class="img1" height="23">
+            <a href="/members/new">  <table class="member2">
+                <div class="member1"> </div>
+                <div class="member">
+                    <a class="member-text" href='/members/new'>회원가입</a>
+                    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+                </div>
+            </table> </a>
+
+            <div class="wrapper" style="text-align: center;">
+                <a href="/oauth2/authorization/google" class="button button-google">
+                    <img th:src="@{/css/images/google.png}" height="50">
+                    Google
+                </a>
+                <a href="/oauth2/authorization/kakao" class="button button-kakao">
+                    <img th:src="@{/css/images/kakao.png}" height="50">
+                    Kakao
+                </a>
+                <a href="/oauth2/authorization/naver" class="button button-naver">
+                    <img th:src="@{/css/images/naver.png}" height="50">
+                    Naver
+                </a>
+            </div>
+
+
+        </div>
+    </div>
+
+</main>
+
+</body>
 </html>

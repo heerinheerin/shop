@@ -3,89 +3,222 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layouts/layout1}">
 
-<th:block layout:fragment="css">
-   <style>
-       .carousel-inner > .item{
-       height : 350px;
-       }
-       .margin{
-       margin-bottom : 30px
-       }
-       .banner{
-       height : 300px;
-       position : absolute; top:0; left:0;
-       width: 100%;
-       height: 100%;
-       }
-       .card-text{
-       text-overflow : ellipsis;
-       white-space : nowrap;
-       overflow : hidden;
-       }
-       a:hover{
-       text-decoration:none;
-       }
-       .center{
-       text-align:center;
-       }
-   </style>
-</th:block>
+<head>
+    <title>JETOY</title>
+    <style>
+        /* 기존 CSS 코드 그대로 유지 */
+        .main {
+            height: 10000px;
+        }
 
+        .main2 {
+            position: relative;
+            z-index: 4;
+            top: 95px;
+            width: 100%;
+            background-color: rgb(255 255 255 / 70%);
+            box-shadow: 0 1px 15px rgba(240, 237, 233, 0.5);
+            height: 640px;
+            border-bottom: 1px solid #eeeeee;
+        }
+
+        .slider__wrap {
+            position: relative;
+            margin-top: 100px;
+            width: 100%;
+            height: 700px; /* 슬라이더 높이 조정 */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden; /* 오버플로우 숨기기 */
+        }
+
+        .slider__inner {
+            display: flex;
+            transition: transform 0.5s ease; /* 부드러운 전환 효과 추가 */
+        }
+
+        .slider {
+            min-width: 100%; /* 하나의 슬라이더만 보이도록 설정 */
+            height: 100%; /* 슬라이더의 높이 설정 */
+        }
+
+        .slider img {
+            width: 100%;
+            height: 700px;
+        }
+
+        .slider__btn button {
+            position: absolute;
+            top: 45%;
+            width: 50px;
+            height: 50px;
+            transition: all 0.2s;
+            pointer-events: auto;
+            border: none;
+            cursor: pointer;
+            background: transparent; /* 배경을 투명하게 설정 */
+        }
+
+        .slider__btn button:hover {
+            border-radius: 50px;
+            background-color: rgb(255 255 255 / 70%);
+            box-shadow: 0 1px 15px rgba(240, 237, 233, 0.5);
+        }
+
+        .slider__btn button.prev {
+            z-index: 10;
+            left: 50px;
+        }
+
+        .slider__btn button.next {
+            z-index: 10;
+            right: 50px;
+        }
+
+        .svg1, .svg2 {
+            margin-left: 0px;
+            width: 25px;
+            color: #ffffff;
+        }
+
+        .svg1:hover, .svg2:hover {
+            color: #434343;
+        }
+
+        /* Dots 스타일 추가 */
+        .slider__dots {
+            position: absolute;
+            bottom: 20px;
+            display: flex;
+            justify-content: center;
+            width: 100%;
+        }
+
+        .slider__dot {
+         background-color: rgb(255 255 255 / 70%);
+            box-shadow: 0 1px 15px rgba(240, 237, 233, 0.5);
+            width: 12px;
+            height: 12px;
+            margin: 0 5px;
+
+            border-radius: 50%;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .slider__dot.active {
+             background-color: #ffffff;
+        }
+    </style>
+</head>
+<body>
 <div layout:fragment="content">
-
-    <div id="carouselControls" class="carousel slide margin" data-ride="carousel">
-        <div class="carousel-inner">
-            <div class="carousel-item active item">
-                <img src="https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2F20150728_261%2Fmymk114_14380717432937LAJn_JPEG%2F%25C4%25C4%25C7%25BB%25C5%25CD_%25BF%25A9%25B8%25A7_%25B9%25E8%25B0%25E6%25C8%25AD%25B8%25E9_%25BD%25C3%25BF%25F8%25C7%25D1_%25B9%25D9%25B4%25D9%25C0%25CC%25B9%25CC%25C1%25F6%25B7%25CE__%25286%2529.jpg&type=sc960_832"
-                     class="d-block w-100 banner" alt="First slide">
+    <div class="main2">
+        <div id="sliderType">
+            <div class="slider__wrap">
+                <div class="slider__inner">
+                    <div class="slider" role="group" aria-label="1/6">
+                        <img th:src="@{/css/images/1.png}">
+                    </div>
+                    <div class="slider" role="group" aria-label="2/6">
+                        <img th:src="@{/css/images/2.png}">
+                    </div>
+                    <div class="slider" role="group" aria-label="3/6">
+                        <img th:src="@{/css/images/3.png}">
+                    </div>
+                    <div class="slider" role="group" aria-label="4/6">
+                        <img th:src="@{/css/images/4.png}">
+                    </div>
+                    <div class="slider" role="group" aria-label="5/6">
+                        <img th:src="@{/css/images/5.png}">
+                    </div>
+                    <div class="slider" role="group" aria-label="6/6">
+                        <img th:src="@{/css/images/6.png}">
+                    </div>
+                </div>
+                <div class="slider__btn">
+                    <button class="prev" role="button" aria-label="왼쪽 이미지">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="svg1" viewBox="0 0 16 16">
+                            <path stroke="currentColor" stroke-width="1" fill-rule="evenodd" d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0"/>
+                        </svg>
+                    </button>
+                    <button class="next" role="button" aria-label="오른쪽 이미지">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="svg2" viewBox="0 0 16 16">
+                            <path stroke="currentColor" stroke-width="1" fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708"/>
+                        </svg>
+                    </button>
+                </div>
+                <div class="slider__dots">
+                    <!-- Dot 버튼 추가 -->
+                    <div class="slider__dot active"></div>
+                    <div class="slider__dot"></div>
+                    <div class="slider__dot"></div>
+                    <div class="slider__dot"></div>
+                    <div class="slider__dot"></div>
+                    <div class="slider__dot"></div>
+                </div>
             </div>
         </div>
     </div>
 
-    <input type="hidden" name="searchQuery" th:value="${itemSearchDto.searchQuery}">
-    <div th:if="${not #strings.isEmpty(itemSearchDto.searchQuery)}" class="center">
-        <p class="h3 font-weight-bold" th:text="${itemSearchDto.searchQuery} + '검색결과'"></p>
-    </div>
-    <div class="container text-center">
-        <div class = "row row-cols-5">
-            <th:block th:each="item, status: ${items.getContent()}">
-                <div class="col">
-                    <div class="card">
-                        <a th:href="'/item/' + ${item.id}" class="text-dark">
-                            <img th:src="${item.imgUrl}" class="card-img-top" th:alt="${item.itemNm}"
-                                 height="400">
-                            <div class="card-body">
-                                <h4 class="card-title">[[${item.itemNm}]]</h4>
-                                <p class="card-text">[[${item.itemDetail}]]</p>
-                                <h3 class="card-title text-danger">[[${item.price}]]원</h3>
-                            </div>
-                        </a>
-                    </div>
-                </div>
-            </th:block>
-        </div>
-    </div>
-    <div th:with="start=${(items.number/maxPage)*maxPage +1},
-        end=(${(items.totalPages == 0) ? 1 : (start +(maxPage-1) < items.totalPages?
-        start + (maxPage-1) : items.totalPages)})">
-        <ul class="pagination justify-content-center">
-            <li class="page-item" th:classappend="${items.number eq 0}?'disabled'">
-                <a th:href="@{'/' + '?searchQuery=' + ${itemSearchDto.searchQuery} + '&page=' + ${items.number-1}}"
-                   aria-label='Previous' class="page-link">
-                    <span aria-hidden="true">Previous</span>
-                </a>
-            </li>
-            <li class="page-item" th:each="page: ${#numbers.sequence(start,end)}"
-                th:classappend="${items.number eq page-1}?'active':''">
-                <a th:href="@{'/' + '?searchQuery=' + ${itemSearchDto.searchQuery} + '&page=' +${page -1}}"
-                   th:inline="text" class="page-link">[[${page}]]</a>
-            </li>
-            <li class="page-item" th:classappend="${items.number+1 ge items.totalPages}?'disabled'">
-                <a th:href="@{'/' + '?searchQuery=' + ${itemSearchDto.searchQuery} + '&page=' + ${items.number + 1}}"
-                   aria-label="Next" class="page-link">
-                    <span aria-hidden="true">Next</span>
-                </a>
-            </li>
-        </ul>
-    </div>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const sliderInner = document.querySelector('.slider__inner');
+            const slides = document.querySelectorAll('.slider');
+            const dots = document.querySelectorAll('.slider__dot');
+            const totalSlides = slides.length;
+            let currentIndex = 0;
+            let autoSlideInterval;
+
+            function updateSliderPosition() {
+                const offset = -currentIndex * 100;
+                sliderInner.style.transform = `translateX(${offset}%)`;
+
+                // Update active dot
+                dots.forEach(dot => dot.classList.remove('active'));
+                dots[currentIndex].classList.add('active');
+            }
+
+            function startAutoSlide() {
+                autoSlideInterval = setInterval(() => {
+                    currentIndex = (currentIndex < totalSlides - 1) ? currentIndex + 1 : 0;
+                    updateSliderPosition();
+                }, 3000); // 3000ms = 3초 간격
+            }
+
+            function stopAutoSlide() {
+                clearInterval(autoSlideInterval);
+            }
+
+            document.querySelector('.prev').addEventListener('click', function() {
+                stopAutoSlide(); // 자동 슬라이드를 멈추고
+                currentIndex = (currentIndex > 0) ? currentIndex - 1 : totalSlides - 1;
+                updateSliderPosition();
+                startAutoSlide(); // 다시 시작
+            });
+
+            document.querySelector('.next').addEventListener('click', function() {
+                stopAutoSlide(); // 자동 슬라이드를 멈추고
+                currentIndex = (currentIndex < totalSlides - 1) ? currentIndex + 1 : 0;
+                updateSliderPosition();
+                startAutoSlide(); // 다시 시작
+            });
+
+            dots.forEach((dot, index) => {
+                dot.addEventListener('click', () => {
+                    stopAutoSlide(); // 자동 슬라이드를 멈추고
+                    currentIndex = index;
+                    updateSliderPosition();
+                    startAutoSlide(); // 다시 시작
+                });
+            });
+
+            // Initialize slider position and start auto slide
+            updateSliderPosition();
+            startAutoSlide();
+        });
+    </script>
 </div>
+</body>
+</html>

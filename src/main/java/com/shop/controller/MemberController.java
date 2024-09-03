@@ -38,6 +38,7 @@ public class MemberController {
             , Model model){
         //@valid 붙은 객체를 검사해서 결과에 에러가 있으면 실행.
         if (bindingResult.hasErrors()){
+            System.out.println("오류1");
             return "member/memberForm";//다시 회원가입으로 돌려보냄.
         }
         if(!confirmCheck){
@@ -63,13 +64,13 @@ public class MemberController {
 
     @GetMapping(value = "/login")
     public String loginMember(){
-        return  "/member/memberLoginForm";
+        return  "member/memberLoginForm";
     }
 
     @GetMapping(value = "/login/error")
     public String loginError(Model model){
         model.addAttribute("loginErrorMsg", "아이디 또는 비밀번호를 확인해주세요.");
-        return "/member/memberLoginForm";
+        return "member/memberLoginForm";
     }
 
     // 이메일 인증

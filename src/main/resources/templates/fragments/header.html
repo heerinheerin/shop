@@ -1,44 +1,393 @@
-<!DOCTYPE html>
+<!doctype html>
 <html xmlns:th="http://www.thymeleaf.org"
-xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
-<div th:fragment="header">
-    <nav class="navbar navbar-expand-lg bg-primary navbar-dark">
-        <div class="container-fluid">
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                    data-bs-target="#navbarTogglerDemo03"
-                    aria-controls="navbarTogglerDemo03"
-                    aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <a class="navbar-brand" href="/">Shop</a>
-            <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                    <li class="nav-item" sec:authorize="hasAnyAuthority('ROLE_ADMIN')">
-                        <a class="nav-link" href="/admin/item/new">상품 등록</a>
-                    </li>
-                    <li class="nav-item" sec:authorize="hasAnyAuthority('ROLE_ADMIN')">
-                        <a class="nav-link" href="/admin/items">상품 관리</a>
-                    </li>
-                    <li class="nav-item" sec:authorize="isAuthenticated()"> <!--isAuthenticate 진짜임을 증명하다-->
-                        <a class="nav-link" href="/cart">장바구니</a>
-                    </li>
-                    <li class="nav-item" sec:authorize="isAuthenticated()">
-                        <a class="nav-link" href="/orders">구매이력</a>
-                    </li>
-                    <li class="nav-item" sec:authorize="isAnonymous()">
-                        <a class="nav-link" href="/members/login">로그인</a>
-                    </li>
-                    <li class="nav-item" sec:authorize="isAuthenticated()">
-                        <a class="nav-link" href="/members/logout">로그아웃</a>
-                    </li>
-                </ul>
-                <form class="d-flex" th:action="@{/}" method="get">
-                    <input name="searchQuery" class="form-control me-2" type="search"
-                           placeholder="Search" aria-label="Search">
-                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-                </form>
-            </div>
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security" xmlns="http://www.w3.org/1999/html">
+
+<header th:fragment="header">
+
+
+        <style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap');
+html, body {
+  font-family: "Noto Sans KR", sans-serif;
+    height: 100%;
+    margin: 0;
+    overflow: auto;
+}
+
+.header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 210px;
+    background-color: rgb(255 255 255 / 70%);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 1px 15px rgba(240, 237, 233, 0.5);
+    border-bottom: 1px solid #eeeeee;
+    font-weight: bold;
+    display: flex; /* Flexbox 추가 */
+    flex-direction: column;
+    align-items: center;
+    z-index: 1000;
+}
+
+            /* ======================== 로고 애니메이션 ======================== */
+            @keyframes sparkle {
+                0%, 100% {
+                    opacity: 1; /* 처음과 끝에서 완전 불투명 */
+                }
+                50% {
+                    opacity: 0.5; /* 중간에서 반투명 */
+                }
+            }
+
+            .logo1, .logo2, .logo3, .logo4 {
+                position: fixed;
+            }
+
+            .logo1 {
+                z-index:  100000;
+                margin-top: 40px;
+                margin-left: 750px;
+                animation: slide-up 3.7s  ease forwards; /* 애니메이션 적용 */
+                  animation-iteration-count: infinite; /* 애니메이션 무한 반복 */
+            }
+
+            .logo2 {
+                z-index: 100000;
+                margin-top: 40px;
+                margin-left: 760px;
+                animation: slide-up 4.0s ease forwards; /* 애니메이션 적용 */
+                  animation-iteration-count: infinite; /* 애니메이션 무한 반복 */
+            }
+
+            .logo3 {
+            z-index: 1000;
+                margin-top: 35px;
+                margin-left:  730px;
+                animation: sparkle 1.5s ease-in-out forwards; /* 애니메이션 적용 후 상태 유지 */
+                animation-iteration-count: 10; /* 애니메이션 반복 횟수 */
+            }
+
+            .logo4 {
+          z-index: 1000;
+                margin-top: 45px;
+                margin-left: 765px;
+                animation: sparkle 1.5s ease-in-out forwards; /* 애니메이션 적용 후 상태 유지 */
+                animation-iteration-count: 10; /* 애니메이션 반복 횟수 */
+            }
+
+            @keyframes slide-up {
+                0% {
+                    transform: translateY(50px); /* 시작 위치: 아래 */
+                    opacity: 0; /* 투명도: 0 */
+                }
+                100% {
+                    transform: translateY(0); /* 최종 위치: 원래 위치 */
+                    opacity: 1; /* 투명도: 1 */
+                }
+            }
+
+
+            .login {
+            white-space: nowrap;
+            position: absolute;
+            left: 1340px;
+            top: 68px;
+        }
+        .login-tx{
+        position: relative;
+        text-decoration:none;
+         z-index: 100001;
+            color:#808080;
+        }
+
+        .logout {
+              white-space: nowrap;
+            position: absolute;
+            left: 1340px;
+            top: 68px;
+        }
+        .logout-tx{
+         position: relative;
+        text-decoration:none;
+         z-index: 100001;
+            color:#808080;
+        }
+
+
+/* ========================채용정보~공지사항 메뉴==================================== */
+.box1{
+  white-space: nowrap; /* 줄 바꿈 방지 */
+  position: fixed;
+  z-index:  100000;
+  margin-left:700px;
+  margin-top:140px;
+
+}
+.box1 a{
+ text-decoration: none;
+ color:	#808080;
+ padding-left:30px;
+                 flex-direction: row; /* 수평 배치 */
+    white-space: nowrap; /* 줄 바꿈 방지 */
+}
+
+
+.dropdown2{
+z-index: 100000;
+                position: absolute;
+                display: flex;
+                   margin-top:140px;
+                margin-left:1030px;
+                flex-direction: row; /* 수평 배치 */
+    white-space: nowrap; /* 줄 바꿈 방지 */
+}
+
+  .menu_pan {
+            display: none; /* 기본적으로 숨김 */
+            position: absolute;
+            width:120px;
+            height:170px;
+            left:0px;
+            font-size: 15px;
+            top: 26px; /* 적절한 위치 */
+            border-bottom: 1px solid #eeeeee;
+            background-color: rgb(255 255 255 / 70%);
+            box-shadow: 0 1px 30px rgba(240, 237, 233, 0.596);
+            backdrop-filter: blur(10px);
+            z-index: 1000; /* 다른 요소 위에 표시 */
+        }
+        .dropdown2:hover .menu_pan {
+            display: flex; /* 드롭다운 메뉴 표시 */
+        }
+        .menu_pan2{
+         text-decoration:none;
+        }
+         .dropdown-item{
+              width:150px;
+        padding-top:5px;
+       margin-left:0px;
+  }
+         .menu_pan2 li{
+          list-style-type: none;
+          position: relative;
+          z-index: 1001;
+        color:	#808080;
+        padding-top:10px;
+        }
+        .menu_pan2 li:hover{
+          color:#87ceeb;
+        }
+          .a1, .a2, .a3, .a4{
+    text-decoration: none;
+    position: relative;
+    left:15px;
+}
+
+.a1::after, .a2::after, .a3::after, .a4::after{
+    content: ""; /* 가상 요소를 생성 */
+    position: absolute; /* 절대 위치 설정 */
+    left: 50%; /* 중앙 정렬 */
+    bottom:-2px; /* 텍스트 아래 위치 */
+    width: 0; /* 초기 너비 0 */
+    height: 2px; /* 줄의 높이 */
+    background-color:		#b0e0e6; /* 줄 색상 */
+    transition: width 0.3s ease, left 0.3s ease; /* 너비와 위치 변화에 애니메이션 추가 */
+}
+
+.a1:hover::after, .a2:hover::after, .a3:hover::after, .a4:hover::after{
+    width: 100%; /* 마우스 오버 시 너비를 100%로 변경 */
+    left: 0; /* 줄이 왼쪽으로 이동 */
+}
+
+/* ========================서치버튼==================================== */
+   .search-box {
+            position: fixed;
+            top: 60px;
+            left: 1050px;
+            z-index: 100000;
+        }
+
+        .search-box2 {
+            display: flex;
+            height: 40px;
+            width: 200px;
+            background-color: #ffffff;
+            border-radius: 10px;
+            padding: 10px;
+            border: 2px solid #b0e0e6;
+            position: absolute;
+            top: 0;
+            left: -100px; /* 요소가 처음에는 왼쪽으로 숨겨져 있음 */
+            opacity: 0; /* 요소를 처음에 투명하게 */
+            transform: translateX(100px); /* 슬라이드 효과를 위해 이동 */
+            transition: transform 1s ease; /* 애니메이션 효과 */
+        }
+
+        .search-box:hover .search-box2 {
+            left: 0; /* 요소가 나타나도록 왼쪽 위치 조정 */
+            opacity: 1; /* 요소가 보이게 함 */
+            transform: translateX(0); /* 슬라이드 효과로 위치 조정 */
+        }
+
+        .search-txt {
+            height: 16px;
+            border: none;
+            background: none;
+            outline: none;
+            font-size: 15px;
+            width: 200px;
+              display: flex;
+        }
+
+        .search-btn {
+          display: flex;
+            position: absolute; /* search-box의 내부에서 위치 조정 */
+            top: -9px;
+            z-index: 100000;
+            margin-left: 190px;
+            margin-top: 15px;
+            color: #b0e0e6;
+            background: none;
+            border: none;
+        }
+        .search-btn img {
+    margin-right: -11px; /* 이미지와 텍스트 사이의 간격 조정 */
+     margin-top: -9px;
+}
+#result{
+position: absolute;
+margin-left:-45px;
+}
+
+        </style>
+
+    </head>
+    <body>
+    <div class="header"></div>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+            data-bs-target="#navbarTogglerDemo03"
+            aria-controls="navbarTogglerDemo03"
+            aria-expanded="false" aria-label="Toggle navigation">
+    </button>
+
+    <ul class="login" sec:authorize="isAnonymous()">
+      <li> <a class="login-tx" href="/members/login">로그인</a></li>
+    </ul>
+
+    <ul class="logout" sec:authorize="isAuthenticated()">
+        <li> <a class="logout-tx" href="/members/logout">로그아웃</a>
+    </ul>
+
+    <a class="logo1" href="/">
+        <img th:src="@{/css/images/logo1.png}" height="60">
+    </a>
+    <a class="logo2" href="/">
+        <img th:src="@{/css/images/logo2.png}" height="60">
+    </a>
+    <a class="logo3" href="/">
+        <img th:src="@{/css/images/logo3.png}" height="68">
+    </a>
+    <a class="logo4" href="/">
+        <img th:src="@{/css/images/logo4.png}" height="62">
+    </a>
+
+    <form class="search-box" th:action="@{/}" method="get">
+        <div class="search-box2">
+        <input class="search-txt" name="searchQuery" type="search" placeholder="검색어를 입력하세요"></div>
+        <button class="search-btn" type="submit"> <img th:src="@{/css/images/search.png}" height="45">Search</button>
+
+    </form>
+
+
+<div class="box1">
+    <a href="" class="a1 px-2 link-secondary" >키즈완구/교구</a>
+    <a href="" class="a2 px-2 link-secondary">역할놀이</a>
+    <a href="" class="a3 px-2 link-secondary">목욕/물놀이</a>
+    </div>
+    <!-- =================================================================== -->
+
+
+    <div class="dropdown2">
+        <a href="" class="a1 px-2 link-secondary">마이페이지</a>
+        <div class="menu_pan">
+            <ul class="menu_pan2">
+                <li> <a class="dropdown-item" href="/cart">장바구니</a></li>
+                <li> <a class="dropdown-item" href="/orders">구매이력</a> </li>
+                <li  sec:authorize="hasAnyAuthority('ROLE_ADMIN')"><a class="dropdown-item" href="/admin/item/new">상품 등록</a></li>
+                <li  sec:authorize="hasAnyAuthority('ROLE_ADMIN')"><a class="dropdown-item" href="/admin/items">상품 관리</a></li>
+            </ul>
         </div>
-    </nav>
-</div>
+    </div>
+
+
+
+
+
+
+        <script>
+            $(document).ready(function () {
+                var token = $("meta[name='_csrf']").attr("content");
+                var header = $("meta[name='_csrf_header']").attr("content");
+                var username = $("#username").val(); // 사용자 이름을 숨은 필드에서 가져옴
+
+                var url = "/members/user/" + encodeURIComponent(username); // URL 경로에 사용자 이름 추가
+
+                $.ajax({
+                    url: url,
+                    type: "GET",
+                    beforeSend: function (xhr) {
+                        // CSRF 토큰을 헤더에 추가
+                        xhr.setRequestHeader(header, token);
+                    },
+                    dataType: "json",
+                    cache: false,
+                    success: function (result, status) {
+                        console.log(result); // 결과를 콘솔에 출력
+                        document.getElementById('result').textContent = result.name; // 이름 출력
+                    }
+                });
+
+             function restartLogos() {
+    $('.logo1, .logo2').css('animation', 'none'); // 애니메이션 제거
+    $('.logo1, .logo2').height(); // 리플로우를 트리거하여 애니메이션 초기화
+    $('.logo1').css('animation', 'slide-up 1.5s ease forwards'); // 애니메이션 재적용
+    $('.logo2').css('animation', 'slide-up 1.9s ease forwards'); // 애니메이션 재적용
+}
+
+// 초기 애니메이션 시작
+restartLogos();
+
+
+setInterval(restartLogos, 20000); // 애니메이션 재시작
+
+
+            //============================드롭다운=====================================================
+              // 드롭다운 메뉴가 영역을 벗어났을 때 숨기기
+                $('.dropdown2').on('mouseleave', function () {
+                    $('.menu_pan').hide(); // 드롭다운 메뉴 숨김
+                });
+
+                // 드롭다운 메뉴에 마우스가 올라가면 보여주기
+                $('.dropdown2').on('mouseenter', function () {
+                    $('.menu_pan').show(); // 드롭다운 메뉴 표시
+                });
+            });
+
+ // 드롭다운 메뉴가 영역을 벗어났을 때 숨기기
+                $('.search-btn').on('mouseleave', function () {
+                    $('.search-box2').hide(); // 드롭다운 메뉴 숨김
+                });
+
+              // 드롭다운 메뉴에 마우스가 올라가면 보여주기
+                $('.search-btn').on('mouseenter', function () {
+                    $('.search-box2').show(); // 드롭다운 메뉴 표시
+                });
+            });
+        </script>
+
+        </script>
+    </body>
+</header>
 </html>

@@ -31,7 +31,7 @@ public class ItemController {
     @GetMapping(value = "/admin/item/new")
     public String itemForm(Model model){
         model.addAttribute("itemFormDto",new ItemFormDto());
-        return "/item/itemForm";
+        return "item/itemForm";
     }
     @PostMapping(value = "/admin/item/new")
     public String itemNew(@Valid ItemFormDto itemFormDto, BindingResult bindingResult, Model model,
@@ -107,7 +107,8 @@ public class ItemController {
     public String itemDtl(Model model, @PathVariable("itemId") Long itemId) {
         ItemFormDto itemFormDto = itemService.getItemDtl(itemId);
         model.addAttribute("item", itemFormDto);
-        return "item/itemDtl";
+        System.out.println("aaaaaaaaaaaaaaa");
+        return "item/itemDtl1";
     }
 
 
