@@ -6,189 +6,359 @@
 <head>
     <meta name="_csrf" th:content="${_csrf.token}" />
     <meta name="_csrf_header" th:content="${_csrf.headerName}" />
-
 </head>
 <th:block layout:fragment="script">
     <script th:inline="javascript">
         $(document).ready(function () {
-              calculateTotalPrice();
+            calculateTotalPrice();
 
-              $("#count").change(function () {
-                    calculateTotalPrice();
-              });
+            $("#count").change(function () {
+                calculateTotalPrice();
+            });
         });
 
         function calculateTotalPrice() {
-              var count = $("#count").val();
-              var price = $("#price").val();
-              var totalPrice = price * count;
-              $("#totalPrice").html(totalPrice + '원');
+            var count = $("#count").val();
+            var price = $("#price").val();
+            var totalPrice = price * count;
+            $("#totalPrice").html(totalPrice + '원');
         }
 
         function order() {
-              var token = $("meta[name='_csrf']").attr("content");
-              var header = $("meta[name='_csrf_header']").attr("content");
-
-              var url = "/order";
-              var paramData = {
-                    itemId: $("#itemId").val(),
-                    count: $("#count").val()
-              }
-
-              var param = JSON.stringify(paramData);
-
-              $.ajax({
-                    url: url,
-                    type: "POST",
-                    contentType: "application/json",
-                    data: param,
-                    beforeSend: function (xhr) {
-                          // 데이터 전송하기 전에 헤더에 csrf 값을 설정
-                          xhr.setRequestHeader(header, token);
-                    },
-                    dataType: "json",
-                    cache: false,
-                    success: function (result, status) {
-                          alert("주문이 완료 되었습니다.");
-                          location.href='/';
-                    },
-                    error : function(jqXHR, status, error){
-                          if(jqXHR.status == '401'){
-                                alert('로그인 후 이용해주세요');
-                                location.href='/members/login';
-                          }else{
-                                alert(jqXHR.responseText);
-                          }
-                    }
-              });
-        }
-          function addCart(){
             var token = $("meta[name='_csrf']").attr("content");
             var header = $("meta[name='_csrf_header']").attr("content");
 
-            var url = "/cart";
-
+            var url = "/order";
             var paramData = {
-                itemId : $("#itemId").val(),
-                count : $("#count").val()
-            };
+                itemId: $("#itemId").val(),
+                count: $("#count").val()
+            }
 
             var param = JSON.stringify(paramData);
 
             $.ajax({
-                url : url,
-                type : "POST",
-                contentType : "application/json",
-                data : param,
-                beforeSend : function(xhr){
-                    /*데이터 전송하기 전에 헤더에 csrf값 설정*/
+                url: url,
+                type: "POST",
+                contentType: "application/json",
+                data: param,
+                beforeSend: function (xhr) {
+                    // 데이터 전송하기 전에 헤더에 csrf 값을 설정
                     xhr.setRequestHeader(header, token);
                 },
-                dataType : "json",
-                cache : false,
-                success : function(result, status){
-                    alert("상품을 장바구니에 담았습니다.");
+                dataType: "json",
+                cache: false,
+                success: function (result, status) {
+                    alert("주문이 완료 되었습니다.");
                     location.href='/';
                 },
                 error : function(jqXHR, status, error){
                     if(jqXHR.status == '401'){
-                        alert('로그인 후 이용해주세요.');
+                        alert('로그인 후 이용해주세요');
                         location.href='/members/login';
-                    }else{
+                    } else {
                         alert(jqXHR.responseText);
                     }
                 }
             });
         }
 
+        function addCart() {
+            var token = $("meta[name='_csrf']").attr("content");
+            var header = $("meta[name='_csrf_header']").attr("content");
+
+            var url = "/cart";
+
+            var paramData = {
+                itemId: $("#itemId").val(),
+                count: $("#count").val()
+            };
+
+            var param = JSON.stringify(paramData);
+
+            $.ajax({
+                url: url,
+                type: "POST",
+                contentType: "application/json",
+                data: param,
+                beforeSend: function (xhr) {
+                    /*데이터 전송하기 전에 헤더에 csrf값 설정*/
+                    xhr.setRequestHeader(header, token);
+                },
+                dataType: "json",
+                cache: false,
+                success: function (result, status) {
+                    alert("상품을 장바구니에 담았습니다.");
+                    location.href='/';
+                },
+                error: function (jqXHR, status, error) {
+                    if (jqXHR.status == '401') {
+                        alert('로그인 후 이용해주세요.');
+                        location.href='/members/login';
+                    } else {
+                        alert(jqXHR.responseText);
+                    }
+                }
+            });
+        }
     </script>
 </th:block>
+
 <th:block layout:fragment="css">
     <style>
+        body {
+            height: 100%;
+            background-color: #ffffff;
+        }
+        .main-box {
+            width: 100%;
+            height: 100%;
+        }
+        .img1 {
+            margin-top: -250px;
+            margin-left: 470px;
+            height: 500px;
+            width: 450px;
+        }
+        .badge{
+          position:relative;
+            top: 90px;
+            left: 120px;
+            z-index:2;
+        }
+        .item-name{
+        font-size:50px;
+        position:relative;
+            top: 80px;
+            left: 160px;
+
+        }
+        .sell-price{
+ position:relative;
+            top: 100px;
+             left: 190px;
+        }
+        .count{
+         position:relative;
+         width:200px;
+          display: flex;
+           top: 130px;
+             left: 100px;
+        }
+
+
+        .price {
+            position: absolute;
+            display: flex;
+            margin-top: 150px;
+            margin-left: 120px;
+        }
+         .cart-button {
+            position: absolute;
+            height: 50px;
+            width: 350px;
+            display: flex;
+            margin-top: 200px;
+          margin-left:70px;
+        }
+        .cart-btn, .order-btn{
+          border: 2px solid #c8e6e9;
+background:none;}
+
+        .cart-btn:hover, .order-btn:hover {
+        box-shadow: 0px 2px 1px #d3d3d3;
+                  border: 2px solid #fff8e2;
+                 color:#c8e6e9;
+                 }
+
+        @keyframes borderDraw {
+            0% {
+                width: 0%;
+                clip-path: inset(0 100% 0 0);
+            }
+            50% {
+                border: 5px solid #fff8e2;
+                width: 0%;
+                clip-path: inset(0 100% 0 0);
+            }
+            80% {
+                border: 5px solid #fbeab3;
+                width: 100%;
+                clip-path: inset(0 100% 0 0);
+            }
+            100% {
+                width: 100%;
+                clip-path: inset(0 0 0 0);
+            }
+        }
+        .name-box {
+            position: relative;
+            width: 500px;
+            height: 100px;
+            top: -20px;
+            left: 900px;
+            border: 5px solid #f8f9fa;
+            border-radius: 30px;
+            clip-path: polygon(0 0, 100% 0, 100% 70%, 50% 50%, 50% 60%, 0 70%);
+            overflow: hidden;
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.4);
+        }
+        .name-box::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 0;
+            height: 100%;
+            border: 3px solid #c8e6e9;
+            border-radius: 30px;
+            box-sizing: border-box;
+            animation: borderDraw 1s ease-out forwards;
+        }
+        @keyframes fadeInFromLeft {
+            0% {
+                opacity: 0;
+                transform: translateX(-100px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        .name {
+            position: absolute;
+            font-size: 40px;
+            margin-top: -170px;
+            animation: fadeInFromLeft 1s;
+        }
+        .img1-text {
+             position:relative;
+            width: 500px;
+            margin-top: -200px;
+            margin-left: 950px;
+            animation: fadeInFromLeft 1s;
+        }
+        .talk {
+             position:relative;
+            width: 500px;
+            height: 200px;
+            margin-top: 200px;
+            margin-left: 900px;
+            border: 5px solid #f8f9fa;
+            border-radius: 30px;
+            clip-path: polygon(0 30%, 100% 30%, 100% 100%, 0% 100%, 0% 0%, 0 0%);
+            overflow: hidden;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+        }
+        .talk::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 0;
+            height: 100%;
+            border: 3px solid #c8e6e9;
+            border-radius: 30px;
+            box-sizing: border-box;
+            animation: borderDraw 1.5s ease-out forwards;
+        }
+        @keyframes slideDown {
+            from {
+                transform: translateY(-15%);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+        .box2 {
+            background-color: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 1px 15px rgba(240, 237, 233, 0.5);
+            text-align: center;
+            width: 1500px;
+            height: 2500px;
+            position: relative;
+            margin-top: 1005px;
+              margin-left: 950px;
+            animation: slideDown 1s ease-out;
+        }
         .mgb-15 {
-              margin-bottom: 15px;
+            margin-top: 500px;
+            margin-bottom: 15px;
         }
-
         .mgt-30 {
-              margin-top: 30px;
+            margin-top: 500px;
         }
-
         .mgt-50 {
-              margin-top: 50px;
+            margin-top: 500px;
         }
-
-        .repImgDiv {
-              margin-right: 150px;
-              height: auto;
-              width: 50%;
-        }
-
         .repImg {
-              width: 100%;
-              height: 400px;
-        }
-
-        .wd50 {
-              height: auto;
-              width: 50%;
+            margin-top: 500px;
+            width: 100%;
+            height: 400px;
         }
     </style>
 </th:block>
-<div layout:fragment="content" style="margin-left: 25%;margin-right: 25%;">
+
+<div layout:fragment="content">
     <input type="hidden" id="itemId" th:value="${item.id}">
 
-    <div class="d-flex">
-        <div class="repImgDiv">
+    <div class="main-box">
+        <div class="img1">
             <img th:src="${item.itemImgDtoList[0].imgUrl}" class="rounded repImg" th:alt="${item.itemNm}">
         </div>
-        <div class="wd50">
-                  <span th:if="${item.itemSellStatus == T(com.shop.constant.ItemSellStatus).SELL}"
-                        class="badge bg-primary mgb-15">판매중</span>
+
+        <div class="name-box"></div>
+
+        <div class="img1-text">
+
+            <span th:if="${item.itemSellStatus == T(com.shop.constant.ItemSellStatus).SELL}"
+                  class="badge">판매중</span>
             <span th:unless="${item.itemSellStatus == T(com.shop.constant.ItemSellStatus).SELL}"
-                  class="badge bg-primary mgb-15">품절</span>
-            <div class="h4" th:text="${item.itemNm}"></div>
-            <hr class="my-4">
+                  class="badge">품절</span>
+            <div class="item-name" th:text="${item.itemNm}"></div>
+
             <div class="text-right">
-                <div class="h4 text-danger text-left">
+                <div class="sell-price">
                     <input type="hidden" th:value="${item.price}" id="price" name="price">
                     <span th:text="${item.price}"></span>원
                 </div>
-                <div class="input-group w-50">
-                    <div class="input-group-prepend">
+                <div class="count">
                         <span class="input-group-text">수량</span>
-                    </div>
                     <input type="number" name="count" id="count" class="form-control" value="1" min="1">
                 </div>
             </div>
-            <hr class="my-4">
 
-            <div class="text-right mgt-50">
+            <div class="price">
                 <h5>결제 금액</h5>
                 <h3 name="totalPrice" id="totalPrice" class="font-weight-bold"></h3>
             </div>
-            <div th:if="${item.itemSellStatus == T(com.shop.constant.ItemSellStatus).SELL}" class="text-right">
-                <button type="button" class="btn btn-light border border-primary btn-lg"
+
+            <div class="cart-button" th:if="${item.itemSellStatus == T(com.shop.constant.ItemSellStatus).SELL}">
+                <button type="button" class="cart-btn"
                         onclick="addCart()">장바구니 담기</button>
-                <button type="button" class="btn btn-primary btn-lg" onclick="order()">주문하기</button>
+                <button type="button" class="order-btn" onclick="order()">주문하기</button>
             </div>
+
             <div th:unless="${item.itemSellStatus == T(com.shop.constant.ItemSellStatus).SELL}"
                  class="text-right">
                 <button type="button" class="btn btn-danger btn-lg">품절</button>
             </div>
         </div>
+        <div class="talk"></div>
     </div>
-    <div class="mgt-30">
+
+    <div class="box2">
         <div class="container">
             <h4 class="border border-success-subtle rounded-pill display-5">상품 상세 설명</h4>
-            <hr class="m6-4">
             <p class="lead" th:text="${item.itemDetail}"></p>
         </div>
-    </div>
-    <img th:src="${item.itemImgDtoList[1].imgUrl}" class="rounded repImg" th:alt="${item.itemNm}">
-    <div th:each="itemImg : ${item.itemImgDtoList}" class="text-center">
-        <img th:if="${not #strings.isEmpty(itemImg.imgUrl)}" th:src="${itemImg.imgUrl}" class="rounded mgb-15"
-             width="800">
+        <img th:src="${item.itemImgDtoList[1].imgUrl}" class="rounded repImg" th:alt="${item.itemNm}">
+        <div th:each="itemImg : ${item.itemImgDtoList}" class="text-center">
+            <img th:if="${not #strings.isEmpty(itemImg.imgUrl)}" th:src="${itemImg.imgUrl}" class="rounded mgb-15"
+                 width="800">
+        </div>
     </div>
 </div>
-
 </html>

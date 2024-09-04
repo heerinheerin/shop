@@ -8,7 +8,9 @@
     <style>
         /* 기존 CSS 코드 그대로 유지 */
         .main {
-            height: 10000px;
+            overflow-x: hidden;
+            overflow-y: hidden;
+            height: 2000px;
         }
 
         .main2 {
@@ -96,74 +98,473 @@
         }
 
         .slider__dot {
-         background-color: rgb(255 255 255 / 70%);
+            background-color: rgb(255 255 255 / 70%);
             box-shadow: 0 1px 15px rgba(240, 237, 233, 0.5);
             width: 12px;
             height: 12px;
             margin: 0 5px;
-
             border-radius: 50%;
             cursor: pointer;
             transition: background-color 0.3s;
         }
 
         .slider__dot.active {
-             background-color: #ffffff;
+            background-color: #ffffff;
         }
+
+/*=======================================슬라이더1=============================================*/
+
+        .box2 {
+            width: 100%;
+            height: 100%;
+        }
+    .ment {
+    background-color: #fffffff;
+    border-top: 3px solid transparent;
+    border-image: linear-gradient(50deg, #c8e6e9 30%, #fff8e2 67%, #c8e6e9 4%);
+    border-image-slice: 1;
+    width: 100%;
+    margin-top: 10px;
+    height: 10px;
+}
+
+.b-image {
+    display: flex; /* Use flexbox to align images in a row */
+    justify-content: center; /* Center the images horizontally */
+    margin-top: 50px;
+    gap: 10px; /* Space between images */
+}
+
+.b-image img {
+    animation: bounce 3s ease infinite;
+}
+
+.b-image img.no-bounce {
+    animation: none; /* Disable animation for this specific image */
+}
+
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% {
+        transform: translateY(0);
+    }
+    40% {
+        transform: translateY(-30px);
+    }
+    60% {
+        transform: translateY(-15px);
+    }
+}
+
+/* Optionally, add delays to create a staggered effect */
+.b-image img:nth-child(1) {
+    animation-delay: 0s;
+}
+.b-image img:nth-child(2) {
+    animation-delay: 0.8s;
+}
+.b-image img:nth-child(3) {
+    animation-delay: 1s;
+}
+.b-image img:nth-child(4) {
+    animation-delay: 0.8s;
+}
+.b-image img:nth-child(5) {
+    animation-delay: 1s;
+}
+        .container {
+ position: relative;
+ height: auto; /* 컨테이너 높이를 자동으로 조정 */
+ margin-left:0px;
+   width: 100%;
+margin-top:10px;
+}
+
+#imageType01{
+top: 20px;
+  left: 50px;
+  position: relative;
+display: flex;
+}
+
+      .image-all {
+    position: relative;
+    top: 20px;
+    left: 150px;
+    right: 150px;
+    width: 1605px;
+    height: 500px;
+    background: #ffffff;
+    display: flex; /* 자식 요소들을 가로로 정렬하도록 설정 */
+    gap: 20px; /* 자식 요소 사이의 간격 */
+    justify-content: flex-start; /* 자식 요소들을 왼쪽으로 정렬 */
+}
+
+
+/* 이미지 요소의 스타일 */
+.image {
+display: flex;
+    border: 1px solid #eeeeee;
+    background-color: rgb(255 255 255 / 90%);
+    box-shadow: 0 1px 30px rgba(240, 237, 233, 0.8);
+    width: 370px;
+    margin-left:25px;
+    height: 400px;
+    position: relative;
+    overflow: hidden; /* 영역 밖 요소 숨기기 */
+    box-sizing: border-box; /* 패딩과 보더를 너비에 포함시키기 */
+    flex: 0 0 auto; /* 자식 요소가 고정 크기와 자동 정렬로 설정 */
+}
+
+/* 이미지가 컨테이너를 채우도록 설정 */
+.image__box img {
+  display: flex;
+    border-top: 3px solid #c8e6e9;
+
+    width: 400px; /* 이미지가 컨테이너를 채우도록 설정 */
+    height: 100%;
+    transition: all 0.6s ease-in-out; /* 확대 효과 전환 설정 */
+}
+
+/* 이미지 설명의 스타일 */
+.image__desc {
+    box-sizing: border-box;
+    width: 100%;
+    height: 270px;
+    text-align: center;
+    position: absolute;
+    left: 0;
+    bottom: -120px;
+    border-top: 7px solid #ffffff;
+    background-color: rgb(255 255 255 / 70%);
+    box-shadow: 0 1px 30px rgba(240, 237, 233, 0.8);
+    backdrop-filter: blur(5px); /* 배경에 그래픽 효과 설정 : 블러 효과 */
+    transition: all 0.3s ease-in-out; /* 이동 효과 설정 */
+}
+
+/* hover 시 이미지 확대와 설명 상자의 위치 이동 */
+.image:hover .image__desc {
+    bottom: -100px; /* 커서를 갖다 대었을 때 desc가 위로 올라오도록 설정 */
+}
+
+.image:hover .image__box img {
+    transform: scale(1.05); /* 이미지를 확대 시키기 */
+}
+
+/* desc 색상 */
+.img1 .image__desc {
+    background-color: rgb(255 255 255 / 60%);
+}
+
+.img1 .image__desc .image__title {
+    color: rgba(60, 32, 0);
+}
+
+.img1 .image__desc .more {
+    color: rgba(60, 32, 0);
+}
+
+.image__desc .more {
+    font-size: 16px;
+}
+
+
+/* 슬라이더 스타일 */
+.slider2 {
+    display: flex;
+     margin-left:100px;
+    position: relative;
+    overflow: hidden;
+     width: 1350px;
+   height: 500px;
+    /* 원하는 높이로 조정 */
+}
+
+.slider__inner2 {
+ width: 190px;
+ margin-left:-100px;
+    height: 100%;
+    display: flex;
+    transition: transform 0.3s ease;
+}
+
+.slider__inner2 .slide2 {
+    box-sizing: border-box;
+}
+
+
+/* 슬라이더 내비게이션 버튼 스타일 */
+.prev2, .next2 {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(0, 0, 0, 0.5);
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+}
+.prev2 {
+    left: 400px;
+}
+
+.next2 {
+    right:320px;
+}
+
+ .slider__btn2 button {
+            position: absolute;
+            top: 45%;
+            width: 50px;
+            height: 50px;
+            transition: all 0.2s;
+            pointer-events: auto;
+            border: none;
+            cursor: pointer;
+            background: transparent; /* 배경을 투명하게 설정 */
+        }
+
+        .slider__btn2 button:hover {
+            border-radius: 50px;
+            background-color: rgb(255 255 255 / 70%);
+            box-shadow: 0 1px 15px rgba(240, 237, 233, 0.5);
+        }
+
+        .slider__btn2 button.prev {
+            z-index: 10;
+            left: 50px;
+        }
+
+        .slider__btn2 button.next {
+            z-index: 10;
+            right: 50px;
+        }
+
+        .svg3, .svg4 {
+            margin-left: 0px;
+            width: 25px;
+            color: #c8e6e9;
+        }
+
+        .svg3:hover, .svg4:hover {
+            color: #434343;
+        }
+
+        .more {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            padding: 20px;
+            color: black;
+            text-align: center;
+            border: none;
+            background-color: rgb(255 255 255 / 70%);
+            box-shadow: 0 1px 15px rgba(240, 237, 233, 0.5);
+            border-radius: 100%;
+            width: 70px; /* Increased width for better click area */
+            height: 70px;
+            z-index: 1000; /* Ensures it appears above other content */
+        }
+
+        .more a {
+            text-decoration: none;
+            color: black;
+        }
+  .toy {
+        color: #c8e6e9;
+         background: #fff8e2;
+        font-size: 1.2rem;
+        padding: 0.5rem 1rem;
+    }
+
+    .toy:hover {
+        color: #c8e6e9;
+        background: #fff8e2;
+    }
+
+    .last-btn {
+        color: #c8e6e9;
+        margin-left: 800px;
+        background: none;
+    }
+
+    .pagination {
+        color: #c8e6e9;
+        background: none;
+        font-size: 1.2rem;
+    }
+
+    .page-item {
+        background: none;
+        display: inline-block;
+    }
+
+    .page-link {
+        color: #c0c0c0;
+        border: none;
+        background: none;
+        text-decoration: none;
+        font-size: 1.2rem;
+        padding: 0.5rem 1rem;
+        line-height: 1.5;
+    }
+
+    .page-link:focus, .page-link:active {
+        background: none;
+        color: #c8e6e9;
+        outline: none;
+    }
+
+    .page-link:hover {
+        background: #fff8e2;
+    }
+
+    .page-item.active .page-link {
+        background: none;
+        color:  #c0c0c0;
+        border: none;
+        border-bottom: 2px solid #c8e6e9;
+    }
+
+    .page-item.disabled .page-link {
+        background: none; /* 비활성화된 페이지 버튼 배경 색상 없애기 */
+        color: #c8e6e9; /* 비활성화된 페이지 버튼 텍스트 색상 유지 */
+    }
     </style>
 </head>
 <body>
 <div layout:fragment="content">
-    <div class="main2">
-        <div id="sliderType">
-            <div class="slider__wrap">
-                <div class="slider__inner">
-                    <div class="slider" role="group" aria-label="1/6">
-                        <img th:src="@{/css/images/1.png}">
+    <div class="main">
+        <div class="main2">
+            <div id="sliderType">
+                <div class="slider__wrap">
+                    <div class="slider__inner">
+                        <div class="slider" role="group" aria-label="1/6">
+                            <img th:src="@{/css/images/1.png}">
+                        </div>
+                        <div class="slider" role="group" aria-label="2/6">
+                            <img th:src="@{/css/images/2.png}">
+                        </div>
+                        <div class="slider" role="group" aria-label="3/6">
+                            <img th:src="@{/css/images/3.png}">
+                        </div>
+                        <div class="slider" role="group" aria-label="4/6">
+                            <img th:src="@{/css/images/4.png}">
+                        </div>
+                        <div class="slider" role="group" aria-label="5/6">
+                            <img th:src="@{/css/images/5.png}">
+                        </div>
+                        <div class="slider" role="group" aria-label="6/6">
+                            <img th:src="@{/css/images/6.png}">
+                        </div>
                     </div>
-                    <div class="slider" role="group" aria-label="2/6">
-                        <img th:src="@{/css/images/2.png}">
+                    <div class="slider__btn">
+                        <button class="prev" role="button" aria-label="왼쪽 이미지">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="svg1" viewBox="0 0 16 16">
+                                <path stroke="currentColor" stroke-width="1" fill-rule="evenodd" d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0"/>
+                            </svg>
+                        </button>
+                        <button class="next" role="button" aria-label="오른쪽 이미지">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="svg2" viewBox="0 0 16 16">
+                                <path stroke="currentColor" stroke-width="1" fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708"/>
+                            </svg>
+                        </button>
                     </div>
-                    <div class="slider" role="group" aria-label="3/6">
-                        <img th:src="@{/css/images/3.png}">
-                    </div>
-                    <div class="slider" role="group" aria-label="4/6">
-                        <img th:src="@{/css/images/4.png}">
-                    </div>
-                    <div class="slider" role="group" aria-label="5/6">
-                        <img th:src="@{/css/images/5.png}">
-                    </div>
-                    <div class="slider" role="group" aria-label="6/6">
-                        <img th:src="@{/css/images/6.png}">
+                    <div class="slider__dots">
+                        <!-- Dot 버튼 추가 -->
+                        <div class="slider__dot active"></div>
+                        <div class="slider__dot"></div>
+                        <div class="slider__dot"></div>
+                        <div class="slider__dot"></div>
+                        <div class="slider__dot"></div>
+                        <div class="slider__dot"></div>
                     </div>
                 </div>
-                <div class="slider__btn">
-                    <button class="prev" role="button" aria-label="왼쪽 이미지">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="svg1" viewBox="0 0 16 16">
-                            <path stroke="currentColor" stroke-width="1" fill-rule="evenodd" d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0"/>
-                        </svg>
-                    </button>
-                    <button class="next" role="button" aria-label="오른쪽 이미지">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="svg2" viewBox="0 0 16 16">
-                            <path stroke="currentColor" stroke-width="1" fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708"/>
-                        </svg>
-                    </button>
+            </div> <!-- 슬라이드 마지막 닫는 div -->
+            <div class="box2">
+                <div class="ment"></div>
+                <div class="b-image">
+                    <img class="bounce" th:src="@{/css/images/b1.png}" height="70">
+                    <img class="bounce" th:src="@{/css/images/b2.png}" height="70">
+                    <img class="no-bounce" th:src="@{/css/images/b5.png}" height="70"> <!-- 애니메이션에서 제외됨 -->
+                    <img class="bounce" th:src="@{/css/images/b3.png}" height="70">
+                    <img class="bounce" th:src="@{/css/images/b4.png}" height="70"></div>
+
+                <div class="image-all">
+                    <div class="slider2">
+                        <div class="slider__inner2">
+                            <div class="container">
+                                <section id="imageType01">
+                                    <th:block th:each="item, status: ${items.getContent()}">
+                                        <div class="slide2">
+                                            <article class="image img1">
+                                                <figure class="image__box">
+                                                    <a th:href="'/item/' + ${item.id}">
+                                                        <img th:src="${item.imgUrl}" class="card-img" th:alt="${item.itemNm}" height="400">
+                                                        <div class="image__desc">
+                                                            <h3 class="image__title">[[${item.itemNm}]]</h3>
+                                                            <h6 class="image__title">[[${item.itemDetail}]]</h6>
+                                                            <h6 class="image__title">[[${item.price}]]원</h6>
+                                                        </div>
+                                                    </a>
+                                                </figure>
+                                            </article>
+                                        </div>
+                                    </th:block>
+                                </section>
+                            </div>
+                        </div>
+                        <div class="slider__btn2">
+                            <button class="prev2" role="button" aria-label="왼쪽 이미지">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="svg3" viewBox="0 0 16 16">
+                                    <path stroke="currentColor" stroke-width="1" fill-rule="evenodd" d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0"/>
+                                </svg>
+                            </button>
+                            <button class="next2" role="button" aria-label="오른쪽 이미지">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="svg4" viewBox="0 0 16 16">
+                                    <path stroke="currentColor" stroke-width="1" fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708"/>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
                 </div>
-                <div class="slider__dots">
-                    <!-- Dot 버튼 추가 -->
-                    <div class="slider__dot active"></div>
-                    <div class="slider__dot"></div>
-                    <div class="slider__dot"></div>
-                    <div class="slider__dot"></div>
-                    <div class="slider__dot"></div>
-                    <div class="slider__dot"></div>
-                </div>
+            </div>
+            <div class="more"> <a href="#"> top </a></div>
+
+
+
+
+
+            <div class="last-btn" th:with="start=${(items.number/maxPage)*maxPage +1},
+                end=(${(items.totalPages == 0) ? 1 : (start +(maxPage-1) < items.totalPages?
+                start + (maxPage-1) : items.totalPages)})">
+                <ul class="pagination">
+                    <li class="page-item" th:classappend="${items.number eq 0}? 'disabled'">
+                        <a th:href="@{'/'+ '?searchQuery=' + ${itemSearchDto.searchQuery} + '&page=' + ${items.number-1}}"
+                           aria-label='Previous' class="page-link">
+                            <span  class="toy" aria-hidden="true">이전</span>
+                        </a>
+                    </li>
+
+                    <li class="page-item" th:each="page: ${#numbers.sequence(start,end)}"
+                        th:classappend="${items.number eq page-1}? 'active':''">
+                        <a th:href="@{'/' + '?searchQuery=' + ${itemSearchDto.searchQuery} + '&page=' + ${page -1}}"
+                           th:inline="text" class="page-link">[[${page}]]</a>
+                    </li>
+
+                    <li class="page-item" th:classappend="${items.number+1 ge items.totalPages}?'disabled'">
+                        <a th:href="@{'/' + '?searchQuery=' + ${itemSearchDto.searchQuery} + '&page=' + ${items.number + 1}}"
+                           aria-label="Next" class="page-link">
+                            <span class="toy" aria-hidden="true">다음</span>
+                        </a>
+                    </li>
+                </ul>
             </div>
         </div>
     </div>
 
     <script>
         document.addEventListener("DOMContentLoaded", function() {
+            // First Slider
             const sliderInner = document.querySelector('.slider__inner');
             const slides = document.querySelectorAll('.slider');
             const dots = document.querySelectorAll('.slider__dot');
@@ -217,6 +618,33 @@
             // Initialize slider position and start auto slide
             updateSliderPosition();
             startAutoSlide();
+
+
+            // Second Slider
+            const sliderInner2 = document.querySelector('.slider__inner2');
+            const slides2 = document.querySelectorAll('.slide2');
+
+              const visibleSlides = 3; // 한 번에 보이는 슬라이드 수
+              const totalSlides2 = slides2.length;
+              let currentIndex2 = 0;
+
+            function updateSliderPosition2() {
+                const offset = -currentIndex2 * 100;
+                sliderInner2.style.transform = `translateX(${offset}%)`;
+            }
+
+            document.querySelector('.prev2').addEventListener('click', function() {
+                currentIndex2 = (currentIndex2 > 0) ? currentIndex2 - 1 : totalSlides2 - 1;
+                updateSliderPosition2();
+            });
+
+            document.querySelector('.next2').addEventListener('click', function() {
+                currentIndex2 = (currentIndex2 < totalSlides2 - 1) ? currentIndex2 + 1 : 0;
+                updateSliderPosition2();
+            });
+
+            // Initialize second slider position
+            updateSliderPosition2();
         });
     </script>
 </div>

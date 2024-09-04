@@ -28,14 +28,21 @@
 </th:block>
 <th:block layout:fragment="css">
     <style>
-        select{
-            margin-right : 10px
+
+        .main{
+         height: 2000px;
+         position: relative;
         }
+        .table{
+        margin-top:300px;
+        }
+
     </style>
 </th:block>
 
 <div layout:fragment="content">
     <form th:action="@{'/admin/items/'+ ${items.number}}" role="form" method="get" th:object="${items}">
+        <div class="main">
         <table class="table">
             <thead>
             <tr>
@@ -58,6 +65,8 @@
             </tr>
             </tbody>
         </table>
+
+
         <p th:text="${items.number}"></p>
         <p th:text="${items.totalPages}"></p>
 
@@ -104,6 +113,7 @@
             </select>
             <input th:field="*{searchQuery}" type="text" class="form-control" style="width:auto; margin-tight: 15px;" placeholder="검색어를 입력해주세요.">
             <button id="searchBtn" type="submit" class="form-control btn btn-primary" style="width:auto">검색</button>
+        </div>
         </div>
     </form>
 </div>
