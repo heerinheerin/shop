@@ -1,5 +1,6 @@
 package com.shop.controller;
 
+import com.shop.constant.ItemCategory;
 import com.shop.dto.ItemSearchDto;
 import com.shop.dto.MainItemDto;
 import com.shop.service.ItemService;
@@ -32,4 +33,41 @@ public class MainController {
         model.addAttribute("maxPage",5);
         return "main";
     }
+
+    @GetMapping(value = "/wangu")
+    public String wangu(ItemSearchDto itemSearchDto, Optional<Integer> page, Model model) {
+        Pageable pageable = PageRequest.of(page.isPresent() ? page.get() : 0, 5);
+        Page<MainItemDto> items = itemService.getCategoryItemPage(ItemCategory.WANGU, pageable);
+        System.out.println(items.getNumber()+"!!!!!!!");
+        System.out.println(items.getTotalPages() + "#########");
+        model.addAttribute("items", items);
+        model.addAttribute("itemSearchDto", itemSearchDto);
+        model.addAttribute("maxPage",5);
+        return "main";
+    }
+
+    @GetMapping(value = "/role")
+    public String role(ItemSearchDto itemSearchDto,Optional<Integer> page, Model model) {
+        Pageable pageable = PageRequest.of(page.isPresent() ? page.get() : 0, 5);
+        Page<MainItemDto> items = itemService.getCategoryItemPage(ItemCategory.ROLE, pageable);
+        System.out.println(items.getNumber()+"!!!!!!!");
+        System.out.println(items.getTotalPages() + "#########");
+        model.addAttribute("items", items);
+       model.addAttribute("itemSearchDto", itemSearchDto);
+        model.addAttribute("maxPage",5);
+        return "main";
+    }
+    @GetMapping(value = "/bath")
+    public String bath(ItemSearchDto itemSearchDto,Optional<Integer> page, Model model) {
+        Pageable pageable = PageRequest.of(page.isPresent() ? page.get() : 0, 5);
+        Page<MainItemDto> items = itemService.getCategoryItemPage(ItemCategory.BATH, pageable);
+        System.out.println(items.getNumber()+"!!!!!!!");
+        System.out.println(items.getTotalPages() + "#########");
+        model.addAttribute("items", items);
+        model.addAttribute("itemSearchDto", itemSearchDto);
+        model.addAttribute("maxPage",5);
+        return "main";
+    }
+
+
 }

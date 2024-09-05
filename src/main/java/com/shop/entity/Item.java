@@ -1,5 +1,6 @@
 package com.shop.entity;
 
+import com.shop.constant.ItemCategory;
 import com.shop.constant.ItemSellStatus;
 import com.shop.dto.ItemFormDto;
 import com.shop.exception.OutOfStockException;
@@ -38,6 +39,9 @@ public class Item extends BaseEntity{
     @Enumerated(EnumType.STRING)
     private ItemSellStatus itemSellStatus; // 상품 판매 상태
 
+    @Enumerated(EnumType.STRING)
+    private ItemCategory itemCategory; // 상품 판매 상태
+
   //  private LocalDateTime regTime; // 등록 시간
   //  private LocalDateTime updateTime; // 수정 시간
 
@@ -55,6 +59,7 @@ public class Item extends BaseEntity{
         this.stockNumber = itemFormDto.getStockNumber();
         this.itemDetail = itemFormDto.getItemDetail();
         this.itemSellStatus = itemFormDto.getItemSellStatus();
+        this.itemCategory = itemFormDto.getItemCategory();
     }
 
     public void removeStock(int stockNumber) {

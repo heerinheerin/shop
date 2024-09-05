@@ -4,15 +4,28 @@
  font-family: "Noto Sans KR", sans-serif;
   font-optical-sizing: auto;
   font-weight: 400;
+
   font-style: normal;
-    position: absolute;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    width: 100%;
-    padding: 15px 0;
-    text-align: center;
+    position: relative;
+    background-color: rgb(255 255 255 / 70%);
+    backdrop-filter: blur(10px);
+   box-shadow: 0 1px 15px rgba(240, 237, 233, 0.5);
+   border-top: 1px solid #eeeeee;
+   height:190px;
 }
+.footer-logo{
+position: absolute;
+left:190px;
+}
+.footer1{
+ position: absolute;
+left:190px;
+top:80px;}
+.footer2{
+ position: absolute;
+left:190px;
+top:130px;}
+
 .content{
  font-family: "Noto Sans KR", sans-serif;
   font-optical-sizing: auto;

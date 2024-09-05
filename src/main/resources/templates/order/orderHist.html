@@ -50,89 +50,223 @@
 
 <th:block layout:fragment="css">
   <style>
-    .content-mg{
-    margin-left:30%;
-     margin-right:30%;
-      margin-top:2%;
-      margin-bottom:100%;
+    .main{
+  height: 1700px;
+   position: relative;
+}
+    .main2 {
+        position: absolute;
+        top: 250px;
+
     }
-    .repImgDiv{
-    margin-right:15px;
-    margin-left:15px;
-    height:auto;
+       .main2 p{
+    z-index:1;
+      background-color: #ffffff;
+ width: 150px;
+ text-align:center;
+   height: 60px;
+     position: relative;
+     font-size:35px;
+     left:600px;
+     top:47px;
+     }
+
+     .main-box{
+     background-color: #ffffff;
+   backdrop-filter: blur(10px);
+   box-shadow: 0 1px 15px rgba(240, 237, 233, 0.5);
+   margin-top: 7px;
+   margin-left: 530px;
+   width: 850px;
+    height: 1200px;
+   border: 3px solid transparent;
+   border-image: linear-gradient(50deg, #c8e6e9 30%, #fff8e2 67%, #c8e6e9 4%);
+   border-image-slice: 1;
+   position: relative;
+  transition-duration: 1s;
+ transition-timing-function: ease-in;
+ transition-duration: 1s;
+     }
+     .date{
+      position: relative;
+      top:60px;
+       left:50px;
+
+     }
+        .card{
+         position: relative;
+         top:10px;
+      left:45px;
+       width:750px;
+   height:150px;
+   padding:30px;
+margin-bottom:-15px;
+        }
+          .btn{
+     position: relative;
+     z-index:1;
+         top:130px;
+      left:650px;
+        width:100px;
+  height:50px;
+         border:2px solid #c8e6e9;
+       border:2px solid #c8e6e9;
+      background: none; /* 배경 제거 */
+       border-radius:10px;
+     }
+      .btn:hover{
+         border:2px solid #fff8e2;
+        color:#a9a9a9;
+        }
+        .name{
+        position: relative;
+         top:25px;
+      left:25px;
+      font-size:30px;
+        }
+        .price{
+        position: relative;
+         top:35px;
+      left:80px;
+        }
+
+   .repImgDiv{
+   margin-right:15px;
+   margin-left:15px;
+   height:auto;
+   }
+   .repImg{
+   height:100px;
+   width:100px;
+   }
+
+ .last-btn {
+   position: relative;
+         top:60px;
+        color: #c8e6e9;
+        margin-left: 300px;
+        background: none;
     }
-    .repImg{
-    height:100px;
-    width:100px;
+     .toy {
+        color: #c8e6e9;
+         background: #fff8e2;
+        font-size: 1.2rem;
+        padding: 0.5rem 1rem;
     }
-    .card{
-    width:750px;
-    height:100%;
-    padding:30px;
-    margin-bottom:20px;
+
+    .toy:hover {
+        color: #c8e6e9;
+        background: #fff8e2;
     }
-    .fs18{
-    font-size:18px;
+
+    .pagination {
+        color: #c8e6e9;
+        background: none;
+        font-size: 1.2rem;
     }
-    .fs24{
-    font-size:24px;
+
+    .page-item {
+        background: none;
+        display: inline-block;
+    }
+
+    .page-link {
+        color: #c0c0c0;
+        border: none;
+        background: none;
+        text-decoration: none;
+        font-size: 1.2rem;
+        padding: 0.5rem 1rem;
+        line-height: 1.5;
+    }
+
+    .page-link:focus, .page-link:active {
+        background: none;
+        color: #c8e6e9;
+        outline: none;
+    }
+
+    .page-link:hover {
+        background: #fff8e2;
+    }
+
+    .page-item.active .page-link {
+        background: none;
+        color:  #c0c0c0;
+        border: none;
+        border-bottom: 2px solid #c8e6e9;
+    }
+
+    .page-item.disabled .page-link {
+        background: none; /* 비활성화된 페이지 버튼 배경 색상 없애기 */
+        color: #c8e6e9; /* 비활성화된 페이지 버튼 텍스트 색상 유지 */
     }
 
   </style>
 </th:block>
 
 
-<div layout:fragment="content" class="content-mg">
-  <h2 class="mb-4">구매 이력</h2>
-  <div th:each="order : ${orders.getContent()}">
-    <div class="d-flex mb-3 align-self-center">
-      <h4 th:text="${order.orderDate} + '주문'"></h4>
-      <div class="ml-3">
-        <th:block th:if="${order.orderStatus == T(com.shop.constant.OrderStatus).ORDER}">
-          <button type="button" class="btn btn-outline-secondary" th:value="${order.orderId}"
-                  onclick="cancelOrder(this.value)">주문취소</button>
-        </th:block>
-        <th:block th:unless="${order.orderStatus == T(com.shop.constant.OrderStatus).ORDER}">
-          <h4>(취소 완료)</h4> </th:block>
-      </div>
-    </div>
+<div layout:fragment="content">
+  <div class="main">
+    <div class="main2">
+      <p>구매 이력</p>
+      <div class="main-box">
+        <div class="box">
 
-    <div class="card d-flex">
+  <div  th:each="order : ${orders.getContent()}">
+    <div>
+      <h4 class="date" th:text="${order.orderDate} + '주문'"></h4>
+    </div>
+    <th:block th:if="${order.orderStatus == T(com.shop.constant.OrderStatus).ORDER}">
+      <button type="button" class="btn" th:value="${order.orderId}"
+              onclick="cancelOrder(this.value)">주문취소</button>
+    </th:block>
+
+    <div class="card">
       <div th:each="orderItem : ${order.orderItemDtoList}" class="d-flex mb-3">
         <div class="repImgDiv">
           <img th:src="${orderItem.imgUrl}" class="rounded repImg" th:alt="${orderItem.itemNm}">
         </div>
-        <div class="align-self-center w-75">
-          <span th:text="${orderItem.itemNm}" class="fs24 front-weight-bold"></span>
-          <div class="fs18 font-weight-light">
+
+          <span class="name" th:text="${orderItem.itemNm}"></span>
+
+          <div class="price">
             <span th:text="${orderItem.orderPrice} + '원'"></span>
             <span th:text="${orderItem.count} + '개'"></span>
           </div>
-        </div>
+
+        <th:block th:unless="${order.orderStatus == T(com.shop.constant.OrderStatus).ORDER}">
+          <h4>(취소 완료)</h4> </th:block>
       </div>
     </div>
   </div>
+        </div>
 
-  <div th:with="start=${(orders.number/maxPage)*maxPage +1},
+        <div class="last-btn" th:with="start=${(orders.number/maxPage)*maxPage +1},
         end=(${(orders.totalPages == 0) ? 1 : (start + (maxPage-1) < orders.totalPages ?
         start + (maxPage-1) : orders.totalPages)})">
-    <ul class="pagination justify-content-center">
-      <li class="page-item" th:classappend="${orders.number eq 0}?'disable' : ''">
-        <a th:href="@{'/orders/'+ ${orders.number-1}}" aria-label='Previous' class="page-link">
-          <span aria-hidden="true">Previous</span>
-        </a>
-      </li>
-      <li class="page-item" th:each="page: ${#numbers.sequence(start,end)}"
-          th:classappend="${orders.number eq page-1}?'active':''">
-        <a th:href="@{'/orders/'+ ${page-1}}" th:inline="text" class="page-link">[[${page}]]</a>
-      </li>
-      <li class="page-item" th:classappend="${orders.number+1 ge orders.totalPages}?'disabled' : ''">
-        <a th:href="@{'/orders/'+ ${orders.number+1}}" aria-label="Next" class="page-link">
-          <span aria-hidden="true">Next</span>
-        </a>
-      </li>
-    </ul>
-  </div>
+          <ul class="pagination">
+            <li class="page-item" th:classappend="${orders.number eq 0}?'disable' : ''">
+              <a th:href="@{'/orders/'+ ${orders.number-1}}" aria-label='Previous' class="page-link">
+                <span class="toy">이전</span>
+              </a>
+            </li>
+            <li class="page-item" th:each="page: ${#numbers.sequence(start,end)}"
+                th:classappend="${orders.number eq page-1}?'active':''">
+              <a th:href="@{'/orders/'+ ${page-1}}" th:inline="text" class="page-link">[[${page}]]</a>
+            </li>
+            <li class="page-item" th:classappend="${orders.number+1 ge orders.totalPages}?'disabled' : ''">
+              <a th:href="@{'/orders/'+ ${orders.number+1}}" aria-label="Next" class="page-link">
+                <span class="toy" aria-hidden="true">다음</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      </div>
+
+      </div>
 </div>
 </html>
 

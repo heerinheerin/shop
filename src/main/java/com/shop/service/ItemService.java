@@ -1,5 +1,6 @@
 package com.shop.service;
 
+import com.shop.constant.ItemCategory;
 import com.shop.dto.ItemFormDto;
 import com.shop.dto.ItemImgDto;
 import com.shop.dto.ItemSearchDto;
@@ -90,6 +91,11 @@ public class ItemService {
     @Transactional(readOnly = true) // 쿼리문 실행 읽기만 함
     public Page<MainItemDto> getMainItemPage(ItemSearchDto itemSearchDto, Pageable pageable) {
         return itemRepository.getMainItemPage(itemSearchDto, pageable);
+    }
+
+    @Transactional(readOnly = true) // 쿼리문 실행 읽기만 함
+    public Page<MainItemDto> getCategoryItemPage(ItemCategory category, Pageable pageable) {
+        return itemRepository.getCategoryItemPage(category, pageable);
     }
 
 }

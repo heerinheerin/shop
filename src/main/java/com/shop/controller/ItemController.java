@@ -95,11 +95,11 @@ public class ItemController {
         // page.isPresent()-> page값 있어?
         // 값 있다. page.get() / 값 없다 0
         // 페이지 사이즈5 -> 5개만 나옴 , 6개가 되면 다음 페이지
-        Pageable pageable = PageRequest.of(page.isPresent() ? page.get() : 0, 5);
+        Pageable pageable = PageRequest.of(page.isPresent() ? page.get() : 0, 10);
         Page<Item> items = itemService.getAdminItemPage(itemSearchDto, pageable);
         model.addAttribute("items", items);
         model.addAttribute("itemSearchDto", itemSearchDto);
-        model.addAttribute("maxPage", 5);
+        model.addAttribute("maxPage", 10);
         return "item/itemMng";
     }
 

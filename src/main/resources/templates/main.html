@@ -10,7 +10,7 @@
         .main {
             overflow-x: hidden;
             overflow-y: hidden;
-            height: 2000px;
+            height: 1700px;
         }
 
         .main2 {
@@ -118,16 +118,83 @@
             width: 100%;
             height: 100%;
         }
-    .ment {
-    background-color: #fffffff;
+   .ment {
+   overflow: hidden;
+    position: relative;
+    width: 100%;
+    height: 100%; /* 필요한 높이로 조정 */
+    overflow: hidden;
+    background-color: #fff;
     border-top: 3px solid transparent;
     border-image: linear-gradient(50deg, #c8e6e9 30%, #fff8e2 67%, #c8e6e9 4%);
     border-image-slice: 1;
-    width: 100%;
     margin-top: 10px;
-    height: 10px;
 }
 
+.star {
+    position: absolute;
+    width: 100px; /* 별 이미지 크기 조정 */
+    height: auto;
+}
+
+.star1 {
+    animation: moveStar1 30s infinite;
+}
+
+.star2 {
+    animation: moveStar2 20s infinite;
+}
+
+.star3 {
+    animation: moveStar3 30s infinite;
+}
+.star4 {
+    animation: moveStar4 30s infinite;
+}
+.star5 {
+    animation: moveStar5 30s infinite;
+}
+
+/* 별이 자유롭게 움직이는 애니메이션 설정 */
+@keyframes moveStar1 {
+    0% { transform: translate(200vw, -200px); } /* 화면 오른쪽 끝에서 시작 */
+    25% {transform: translate(-500px, 400px); }
+    50% { transform: translate(-70px, 250px); }
+    75% { transform: translate(100vw, -50px); }
+    100% { transform: translate(500px, 300px); }
+}
+
+@keyframes moveStar2 {
+    0% {  transform: translate(90vw, 20vh); }
+    25% {  transform: translate(300px, -190px);  }
+    50% { transform: translate(350px, -500px); }
+    75% { transform: translate(450vw, 100vw); }
+    100% { transform: translate(300px, -190px); }
+}
+
+@keyframes moveStar3 {
+    0% { transform: translate(100vw, 400px); }
+    25% { transform: translate(200px, -150px); }
+    50% { transform: translate(-500px, 100vw); }
+    75% { transform: translate(500px, -300px); }
+    100% { transform: translate(-100px, 190px); }
+}
+
+@keyframes moveStar4 {
+    0% { transform: translate(100vw, -100px); }
+    25% {  transform: translate(500px, 190px);}
+    50% { transform: translate(-500px, -400px); }
+    75% { transform: translate(100vw, 200px); }
+    100% { transform: translate(300px, -190px); }
+}
+
+@keyframes moveStar5 {
+    0% {  transform: translate(20vw, 90vh); }
+    25% {transform: translate(300px, -190px);  }
+    50% { transform: translate(400px, -500px); }
+    75% { transform: translate(200px, -200px); }
+    100% { transform: translate(300px, -190px); }
+}
 .b-image {
     display: flex; /* Use flexbox to align images in a row */
     justify-content: center; /* Center the images horizontally */
@@ -360,9 +427,9 @@ display: flex;
             background-color: rgb(255 255 255 / 70%);
             box-shadow: 0 1px 15px rgba(240, 237, 233, 0.5);
             border-radius: 100%;
-            width: 70px; /* Increased width for better click area */
+            width: 70px;
             height: 70px;
-            z-index: 1000; /* Ensures it appears above other content */
+            z-index: 1000;
         }
 
         .more a {
@@ -481,84 +548,107 @@ display: flex;
                 </div>
             </div> <!-- 슬라이드 마지막 닫는 div -->
             <div class="box2">
-                <div class="ment"></div>
-                <div class="b-image">
-                    <img class="bounce" th:src="@{/css/images/b1.png}" height="70">
-                    <img class="bounce" th:src="@{/css/images/b2.png}" height="70">
-                    <img class="no-bounce" th:src="@{/css/images/b5.png}" height="70"> <!-- 애니메이션에서 제외됨 -->
-                    <img class="bounce" th:src="@{/css/images/b3.png}" height="70">
-                    <img class="bounce" th:src="@{/css/images/b4.png}" height="70"></div>
+                <div class="ment">
+                    <img src="/css/images/star1.png" class="star star1">
+                    <img src="/css/images/star2.png" class="star star2">
+                    <img src="/css/images/star3.png" class="star star3">
+                    <img src="/css/images/star4.png" class="star star4">
+                    <img src="/css/images/star5.png" class="star star5">
 
-                <div class="image-all">
-                    <div class="slider2">
-                        <div class="slider__inner2">
-                            <div class="container">
-                                <section id="imageType01">
-                                    <th:block th:each="item, status: ${items.getContent()}">
-                                        <div class="slide2">
-                                            <article class="image img1">
-                                                <figure class="image__box">
-                                                    <a th:href="'/item/' + ${item.id}">
-                                                        <img th:src="${item.imgUrl}" class="card-img" th:alt="${item.itemNm}" height="400">
-                                                        <div class="image__desc">
-                                                            <h3 class="image__title">[[${item.itemNm}]]</h3>
-                                                            <h6 class="image__title">[[${item.itemDetail}]]</h6>
-                                                            <h6 class="image__title">[[${item.price}]]원</h6>
-                                                        </div>
-                                                    </a>
-                                                </figure>
-                                            </article>
-                                        </div>
-                                    </th:block>
-                                </section>
+                    <div class="b-image">
+                        <img class="bounce" th:src="@{/css/images/b1.png}" height="70">
+                        <img class="bounce" th:src="@{/css/images/b2.png}" height="70">
+                        <img class="no-bounce" th:src="@{/css/images/b5.png}" height="70"> <!-- 애니메이션에서 제외됨 -->
+                        <img class="bounce" th:src="@{/css/images/b3.png}" height="70">
+                        <img class="bounce" th:src="@{/css/images/b4.png}" height="70"></div>
+
+                    <div class="image-all">
+                        <div class="slider2">
+                            <div class="slider__inner2">
+                                <div class="container">
+                                    <section id="imageType01">
+                                        <th:block th:each="item, status: ${items.getContent()}">
+                                            <div class="slide2">
+                                                <article class="image img1">
+                                                    <figure class="image__box">
+                                                        <a th:href="'/item/' + ${item.id}">
+                                                            <img th:src="${item.imgUrl}" class="card-img" th:alt="${item.itemNm}" height="400">
+                                                            <div class="image__desc">
+                                                                <h3 class="image__title">[[${item.itemNm}]]</h3>
+                                                                <h6 class="image__title">[[${item.itemDetail}]]</h6>
+                                                                <h6 class="image__title">[[${item.price}]]원</h6>
+                                                            </div>
+                                                        </a>
+                                                    </figure>
+                                                </article>
+                                            </div>
+                                        </th:block>
+                                    </section>
+                                </div>
+                                <img src="/css/images/star3.png" class="star star3">
+                                <img src="/css/images/star4.png" class="star star4">
+                                <img src="/css/images/star5.png" class="star star5">
                             </div>
-                        </div>
-                        <div class="slider__btn2">
-                            <button class="prev2" role="button" aria-label="왼쪽 이미지">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="svg3" viewBox="0 0 16 16">
-                                    <path stroke="currentColor" stroke-width="1" fill-rule="evenodd" d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0"/>
-                                </svg>
-                            </button>
-                            <button class="next2" role="button" aria-label="오른쪽 이미지">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="svg4" viewBox="0 0 16 16">
-                                    <path stroke="currentColor" stroke-width="1" fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708"/>
-                                </svg>
-                            </button>
+                            <div class="slider__btn2">
+                                <button class="prev2" role="button" aria-label="왼쪽 이미지">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="svg3" viewBox="0 0 16 16">
+                                        <path stroke="currentColor" stroke-width="1" fill-rule="evenodd" d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0"/>
+                                    </svg>
+                                </button>
+                                <button class="next2" role="button" aria-label="오른쪽 이미지">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="svg4" viewBox="0 0 16 16">
+                                        <path stroke="currentColor" stroke-width="1" fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708"/>
+                                    </svg>
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="more"> <a href="#"> top </a></div>
+
+                <img src="/css/images/star4.png" class="star star4">
+                <img src="/css/images/star5.png" class="star star5">
 
 
 
-
-
-            <div class="last-btn" th:with="start=${(items.number/maxPage)*maxPage +1},
+                <div class="last-btn" th:with="start=${(items.number/maxPage)*maxPage +1},
                 end=(${(items.totalPages == 0) ? 1 : (start +(maxPage-1) < items.totalPages?
                 start + (maxPage-1) : items.totalPages)})">
-                <ul class="pagination">
-                    <li class="page-item" th:classappend="${items.number eq 0}? 'disabled'">
-                        <a th:href="@{'/'+ '?searchQuery=' + ${itemSearchDto.searchQuery} + '&page=' + ${items.number-1}}"
-                           aria-label='Previous' class="page-link">
-                            <span  class="toy" aria-hidden="true">이전</span>
-                        </a>
-                    </li>
+                    <ul class="pagination">
+                        <li class="page-item" th:classappend="${items.number eq 0}? 'disabled'">
+                            <a th:href="@{'/'+ '?searchQuery=' + ${itemSearchDto.searchQuery} + '&page=' + ${items.number-1}}"
+                               aria-label='Previous' class="page-link">
+                                <span  class="toy" aria-hidden="true">이전</span>
+                            </a>
+                        </li>
+                        <img src="/css/images/star1.png" class="star star3">
+                        <img src="/css/images/star2.png" class="star star5">
+                        <img src="/css/images/star3.png" class="star star1">
 
-                    <li class="page-item" th:each="page: ${#numbers.sequence(start,end)}"
-                        th:classappend="${items.number eq page-1}? 'active':''">
-                        <a th:href="@{'/' + '?searchQuery=' + ${itemSearchDto.searchQuery} + '&page=' + ${page -1}}"
-                           th:inline="text" class="page-link">[[${page}]]</a>
-                    </li>
+                        <li class="page-item" th:each="page: ${#numbers.sequence(start,end)}"
+                            th:classappend="${items.number eq page-1}? 'active':''">
+                            <a th:href="@{'/' + '?searchQuery=' + ${itemSearchDto.searchQuery} + '&page=' + ${page -1}}"
+                               th:inline="text" class="page-link">[[${page}]]</a>
+                        </li>
 
-                    <li class="page-item" th:classappend="${items.number+1 ge items.totalPages}?'disabled'">
-                        <a th:href="@{'/' + '?searchQuery=' + ${itemSearchDto.searchQuery} + '&page=' + ${items.number + 1}}"
-                           aria-label="Next" class="page-link">
-                            <span class="toy" aria-hidden="true">다음</span>
-                        </a>
-                    </li>
-                </ul>
+                        <li class="page-item" th:classappend="${items.number+1 ge items.totalPages}?'disabled'">
+                            <a th:href="@{'/' + '?searchQuery=' + ${itemSearchDto.searchQuery} + '&page=' + ${items.number + 1}}"
+                               aria-label="Next" class="page-link">
+                                <span class="toy" aria-hidden="true">다음</span>
+                            </a>
+                        </li>
+                        <img src="/css/images/star3.png" class="star star1">
+                        <img src="/css/images/star4.png" class="star star2">
+                        <img src="/css/images/star5.png" class="star star3">
+                    </ul>
+                </div>
+                <img src="/css/images/star4.png" class="star star1">
+                <img src="/css/images/star5.png" class="star star2">
+                <img src="/css/images/star1.png" class="star star3">
+                <img src="/css/images/star2.png" class="star star4">
+                <img src="/css/images/star3.png" class="star star5">
             </div>
+
+            <div class="more"> <a href=""> top </a></div>
         </div>
     </div>
 

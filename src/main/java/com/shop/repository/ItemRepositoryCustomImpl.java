@@ -3,6 +3,7 @@ package com.shop.repository;
 import com.querydsl.core.QueryResults;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import com.shop.constant.ItemCategory;
 import com.shop.constant.ItemSellStatus;
 import com.shop.dto.ItemSearchDto;
 import com.shop.dto.MainItemDto;
@@ -34,6 +35,14 @@ public class ItemRepositoryCustomImpl implements ItemRepositoryCustom {
         //ItemSellStatus null이면 null리턴 null 아니면 SELL, SOLD 둘 중 하나 리턴
 
     }
+
+    private BooleanExpression searchCategoryEq(ItemCategory category) {
+        return category == null ?
+                null : QItem.item.itemCategory.eq(category);
+        //ItemSellStatus null이면 null리턴 null 아니면 SELL, SOLD 둘 중 하나 리턴
+
+    }
+
     private BooleanExpression regDtsAfter(String searchDateType) { // all, 1d, 1w, 1m, 6m
         LocalDateTime dateTime = LocalDateTime.now(); //현재시간을 추출해서 변수에 대입
 
@@ -87,6 +96,23 @@ public class ItemRepositoryCustomImpl implements ItemRepositoryCustom {
                 item.itemDetail,itemImg.imgUrl,item.price))
                 .from(itemImg).join(itemImg.item, item).where(itemImg.reqImgYn.eq("Y"))
                 .where(itemNmLike(itemSearchDto.getSearchQuery()))
+                .orderBy(item.id.desc()).offset(pageable.getOffset()).limit(pageable.getPageSize()).fetchResults();
+        List<MainItemDto>content = results.getResults();
+        long total = results.getTotal();
+        return new PageImpl<>(content, pageable, total);
+    }
+
+    @Override
+    public Page<MainItemDto> getCategoryItemPage(ItemCategory category, Pageable pageable) {
+        QItem item = QItem.item;
+        QItemImg itemImg = QItemImg.itemImg;
+
+        QueryResults<MainItemDto> results = queryFactory.select(new QMainItemDto(item.id, item.itemNm,
+                        item.itemDetail,itemImg.imgUrl,item.price))
+                .from(itemImg).join(itemImg.item, item).where(itemImg.reqImgYn.eq("Y"))
+                .where(
+                        searchCategoryEq(category)
+                )
                 .orderBy(item.id.desc()).offset(pageable.getOffset()).limit(pageable.getPageSize()).fetchResults();
         List<MainItemDto>content = results.getResults();
         long total = results.getTotal();

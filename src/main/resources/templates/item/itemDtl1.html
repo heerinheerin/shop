@@ -106,12 +106,12 @@
 <th:block layout:fragment="css">
     <style>
         body {
-            height: 100%;
+            height: 3000px;
             background-color: #ffffff;
         }
         .main-box {
             width: 100%;
-            height: 100%;
+            height: 4500px;
         }
         .img1 {
             margin-top: -250px;
@@ -122,27 +122,28 @@
         .badge{
           position:relative;
             top: 90px;
-            left: 120px;
+            left: 135px;
             z-index:2;
         }
         .item-name{
         font-size:50px;
         position:relative;
             top: 80px;
-            left: 160px;
+            left: 100px;
+             color: #808080;
 
         }
         .sell-price{
  position:relative;
             top: 100px;
-             left: 190px;
+             left: 200px;
         }
         .count{
          position:relative;
          width:200px;
           display: flex;
-           top: 130px;
-             left: 100px;
+           top: 140px;
+             left: 120px;
         }
 
 
@@ -150,17 +151,22 @@
             position: absolute;
             display: flex;
             margin-top: 150px;
-            margin-left: 120px;
+            margin-left: 130px;
         }
          .cart-button {
             position: absolute;
             height: 50px;
             width: 350px;
             display: flex;
-            margin-top: 200px;
-          margin-left:70px;
+            margin-top: 250px;
+          margin-left:130px;
+           gap: 10px;
         }
         .cart-btn, .order-btn{
+        z-index:100000;
+        position: relative;
+         border: 2px solid #c8e6e9;
+          border-radius: 5px;
           border: 2px solid #c8e6e9;
 background:none;}
 
@@ -195,7 +201,7 @@ background:none;}
             width: 500px;
             height: 100px;
             top: -20px;
-            left: 900px;
+            left: 930px;
             border: 5px solid #f8f9fa;
             border-radius: 30px;
             clip-path: polygon(0 0, 100% 0, 100% 70%, 50% 50%, 50% 60%, 0 70%);
@@ -241,8 +247,8 @@ background:none;}
              position:relative;
             width: 500px;
             height: 200px;
-            margin-top: 200px;
-            margin-left: 900px;
+            margin-top: 160px;
+            margin-left: 930px;
             border: 5px solid #f8f9fa;
             border-radius: 30px;
             clip-path: polygon(0 30%, 100% 30%, 100% 100%, 0% 100%, 0% 0%, 0 0%);
@@ -272,19 +278,58 @@ background:none;}
             }
         }
         .box2 {
+         border-left: 3px solid #c8e6e9;
+    border: 3px solid #c8e6e9;
             background-color: rgba(255, 255, 255, 0.7);
             backdrop-filter: blur(10px);
             box-shadow: 0 1px 15px rgba(240, 237, 233, 0.5);
             text-align: center;
             width: 1500px;
-            height: 2500px;
+            height: 3200px;
             position: relative;
-            margin-top: 1005px;
-              margin-left: 950px;
+            margin-top: -3500px;
+              margin-left: 200px;
             animation: slideDown 1s ease-out;
         }
+
+        .imgbox {
+    z-index: 1;
+    position: absolute;
+    margin-top: 150px;
+    margin-left: -490px;
+     height: 1000px;
+    width: 1000px;
+}
+
+.imgbox2 {
+    position: absolute;
+    margin-top: 1100px;
+     margin-left: -490px;
+   height: 1000px;
+    width: 1000px;
+}
+.imgbox3 {
+    position: absolute;
+    margin-top: 2000px;
+     margin-left: -490px;
+   height: 1000px;
+    width: 1000px;
+}
+
+.box2-text {
+    position: absolute;
+    z-index: 2;
+    margin-left: 650px;
+    margin-top: 70px;
+    color: #808080;
+    font-size: 33px;
+}
+.lead{
+margin-top:20px;
+ font-size: 25px;
+}
         .mgb-15 {
-            margin-top: 500px;
+            margin-top: 600px;
             margin-bottom: 15px;
         }
         .mgt-30 {
@@ -336,8 +381,7 @@ background:none;}
             </div>
 
             <div class="cart-button" th:if="${item.itemSellStatus == T(com.shop.constant.ItemSellStatus).SELL}">
-                <button type="button" class="cart-btn"
-                        onclick="addCart()">장바구니 담기</button>
+                <button type="button" class="cart-btn" onclick="addCart()">장바구니 담기</button>
                 <button type="button" class="order-btn" onclick="order()">주문하기</button>
             </div>
 
@@ -350,14 +394,13 @@ background:none;}
     </div>
 
     <div class="box2">
-        <div class="container">
-            <h4 class="border border-success-subtle rounded-pill display-5">상품 상세 설명</h4>
+
+            <p class="box2-text">상품 상세 설명</p>
             <p class="lead" th:text="${item.itemDetail}"></p>
-        </div>
-        <img th:src="${item.itemImgDtoList[1].imgUrl}" class="rounded repImg" th:alt="${item.itemNm}">
-        <div th:each="itemImg : ${item.itemImgDtoList}" class="text-center">
-            <img th:if="${not #strings.isEmpty(itemImg.imgUrl)}" th:src="${itemImg.imgUrl}" class="rounded mgb-15"
-                 width="800">
+        <img th:src="${item.itemImgDtoList[1].imgUrl}" class="imgbox" th:alt="${item.itemNm}">
+        <img th:src="${item.itemImgDtoList[2].imgUrl}" class="imgbox2" th:alt="${item.itemNm}">
+        <img th:src="${item.itemImgDtoList[3].imgUrl}" class="imgbox3" th:alt="${item.itemNm}">
+            <div th:each="itemImg : ${item.itemImgDtoList}">
         </div>
     </div>
 </div>

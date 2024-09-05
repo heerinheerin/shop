@@ -1,14 +1,14 @@
 package com.shop.dto;
 
 
+import com.shop.constant.ItemCategory;
 import com.shop.constant.ItemSellStatus;
-import com.shop.entity.Item;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 import org.modelmapper.ModelMapper;
-
+import com.shop.entity.Item;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,6 +33,7 @@ public class ItemFormDto {
     private Integer stockNumber;
 
     private ItemSellStatus itemSellStatus;
+    private ItemCategory itemCategory;
 
     //-----------------------------------ItemImage
 
