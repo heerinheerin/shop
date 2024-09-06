@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout1}">
+
+<head>
+    <title>JETOY</title>
+    <style>
+        .main {
+ position: fixed;
+        }
+
+.img-box{
+ position: relative;
+ margin-top:190px;
+margin-left:245px;
+ width: 1650px;
+height:900px;
+}
+        .image-all{
+ position: relative;
+ margin-bottom:100px;
+  margin-top: -10px;
+ width: 100%;
+ height:100%;
+
+}
+
+.container {
+ height: auto; /* 컨테이너 높이를 자동으로 조정 */
+ margin-left:270px;
+   width: 100%;
+margin-top:27px;
+}
+
+
+.container2 {
+    display: flex;
+    align-items: center; /* 이미지 세로 중앙 정렬 */
+    justify-content: space-between; /* 좌우로 균등하게 배치 */
+    margin-top: 126px;
+    margin-left: -180px;
+    width: 100%; /* 화면에 맞게 너비를 조정 */
+    max-width: 100vw; /* 최대 너비를 화면 너비에 맞춤 */
+    background: #fff8e2;
+    border-bottom: 1px solid #ffffff;
+       overflow: hidden; /* 컨테이너의 오버플로우 숨기기 */
+}
+
+.container2 img {
+width: 100%;
+    height: 140px;
+    margin-left:-10px;
+}
+
+
+
+
+
+#imageType01 {
+width:1600px;
+ flex-wrap: wrap;
+    display: flex;
+    gap: 20px; /* 이미지 사이의 간격 설정 */
+    justify-content: flex-start; /* 이미지가 왼쪽에 정렬되도록 설정 */
+}
+
+
+
+.image {
+border: 1px solid #eeeeee;
+ background-color: rgb(255 255 255 / 90%);
+ width: 300px;
+   height: 300px;
+    position: relative;
+    overflow: hidden;   /* 영역 밖 요소 숨기기 */
+    box-sizing: border-box; /* 패딩과 보더를 너비에 포함시키기 */
+}
+
+.image__box img {
+   width: 100%; /* 이미지가 컨테이너를 채우도록 설정 */
+    height: 100%;
+    object-fit: cover; /* 이미지 비율 유지하며 채우기 */
+    transition: all 0.6s ease-in-out; /* 확대 효과 전환 설정 */
+}
+
+
+.name {
+font-size:22px;
+}
+.price{
+font-size:17px;
+color: #87ceeb;
+}
+.image:hover .image__box img {
+    transform: scale(1.05); /* 이미지를 확대 시키기 */
+}
+
+.last-btn {
+            color: #c8e6e9;
+            margin-left: 950px;
+              margin-top: 70px;
+            background: none;
+        }
+         .toy {
+            color: #c8e6e9;
+             background: #fff8e2;
+            font-size: 1.2rem;
+            padding: 0.5rem 1rem;
+        }
+
+        .toy:hover {
+            color: #c8e6e9;
+            background: #fff8e2;
+        }
+
+        .pagination {
+            color: #c8e6e9;
+            background: none;
+            font-size: 1.2rem;
+        }
+
+        .page-item {
+            background: none;
+            display: inline-block;
+        }
+
+        .page-link {
+            color: #c0c0c0;
+            border: none;
+            background: none;
+            text-decoration: none;
+            font-size: 1.2rem;
+            padding: 0.5rem 1rem;
+            line-height: 1.5;
+        }
+
+        .page-link:focus, .page-link:active {
+            background: none;
+            color: #c8e6e9;
+            outline: none;
+        }
+
+        .page-link:hover {
+            background: #fff8e2;
+        }
+
+        .page-item.active .page-link {
+            background: none;
+            color:  #c0c0c0;
+            border: none;
+            border-bottom: 2px solid #c8e6e9;
+        }
+
+        .page-item.disabled .page-link {
+            background: none; /* 비활성화된 페이지 버튼 배경 색상 없애기 */
+            color: #c8e6e9; /* 비활성화된 페이지 버튼 텍스트 색상 유지 */
+        }
+    </style>
+</head>
+<body>
+<div layout:fragment="content">
+
+    <div class="main"></div>
+    <img class="img-box" src="/css/images/bath.png">
+    <div class="image-all">
+        <div class="container">
+            <section id="imageType01">
+                <th:block th:each="item, status: ${items.getContent()}">
+                    <div class="">
+                        <article class="image img1">
+                            <figure class="image__box">
+                                <a th:href="'/item/' + ${item.id}">
+                                    <img th:src="${item.imgUrl}" class="card-img" th:alt="${item.itemNm}" height="400">
+                                </a>
+                            </figure>
+                        </article>
+                        <h3 class="name">[[${item.itemNm}]]</h3>
+                        <h6 class="price">[[${item.price}]]원</h6>
+                    </div>
+                </th:block>
+            </section>
+        </div>
+        <div class="last-btn" th:with="start=${(items.number/maxPage)*maxPage +1},
+                end=(${(items.totalPages == 0) ? 1 : (start +(maxPage-1) < items.totalPages?
+                start + (maxPage-1) : items.totalPages)})">
+            <ul class="pagination">
+                <li class="page-item" th:classappend="${items.number eq 0}? 'disabled'">
+                    <a th:href="@{'/bath'+ '?searchQuery=' + ${itemSearchDto.searchQuery} + '&page=' + ${items.number-1}}"
+                       aria-label='Previous' class="page-link">
+                        <span  class="toy" aria-hidden="true">이전</span>
+                    </a>
+                </li>
+
+                <li class="page-item" th:each="page: ${#numbers.sequence(start,end)}"
+                    th:classappend="${items.number eq page-1}? 'active':''">
+                    <a th:href="@{'/bath' + '?searchQuery=' + ${itemSearchDto.searchQuery} + '&page=' + ${page -1}}"
+                       th:inline="text" class="page-link">[[${page}]]</a>
+                </li>
+
+                <li class="page-item" th:classappend="${items.number+1 ge items.totalPages}?'disabled'">
+                    <a th:href="@{'/bath' + '?searchQuery=' + ${itemSearchDto.searchQuery} + '&page=' + ${items.number + 1}}"
+                       aria-label="Next" class="page-link">
+                        <span class="toy" aria-hidden="true">다음</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+    </div>
+</div>
+</body>
+</html>

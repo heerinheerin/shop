@@ -43,7 +43,7 @@ public class MainController {
         model.addAttribute("items", items);
         model.addAttribute("itemSearchDto", itemSearchDto);
         model.addAttribute("maxPage",5);
-        return "main";
+        return "category/wangu";
     }
 
     @GetMapping(value = "/role")
@@ -55,7 +55,7 @@ public class MainController {
         model.addAttribute("items", items);
        model.addAttribute("itemSearchDto", itemSearchDto);
         model.addAttribute("maxPage",5);
-        return "main";
+        return "category/role";
     }
     @GetMapping(value = "/bath")
     public String bath(ItemSearchDto itemSearchDto,Optional<Integer> page, Model model) {
@@ -66,7 +66,7 @@ public class MainController {
         model.addAttribute("items", items);
         model.addAttribute("itemSearchDto", itemSearchDto);
         model.addAttribute("maxPage",5);
-        return "main";
+        return "category/bath";
     }
 
 
