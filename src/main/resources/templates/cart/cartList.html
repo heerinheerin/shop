@@ -159,6 +159,11 @@
    height: 1500px;
     position: relative;
  }
+ .box2{
+   display: flex;
+        position: relative;
+    height: 60px;
+ }
      .main2 {
          position: absolute;
          top: 250px;
@@ -206,36 +211,47 @@
         display: flex;
         gap: 250px;
       }
+
       .tbody{
       position: relative;
       top:160px;
       }
       .cartChkBox{
       position: relative;
-      left:65px;
+      left:70px;
       }
       .img{
        position: relative;
-      left:20px;
+      left:90px;
       width:120px;
       height:120px;
       }
       .item-name{
        position: relative;
-      left:185px;
+      left:230px;
       font-size:20px;
       }
 
+
       .sellprice{
-      position: relative;
-      top:50px;
-      left:-50px;
+      text-align:center;
+       display: flex;
+      position:relative;
+      top:20px;
+      margin-left:100px;
+      padding-right:40px;
       }
-      .count-Box{
-        position: relative;
-        top:20px;
-      left:130px;
-      }
+
+.count-Box {
+
+    text-align:center;
+       display: flex;
+    align-items: center; /* 자식 요소를 세로로 중앙 정렬 */
+    justify-content: flex-start; /* 자식 요소를 왼쪽 정렬 */
+    gap: 10px; /* 자식 요소들 사이의 간격 */
+    margin: 0;
+    padding: 0; /* 필요에 따라 패딩을 조정 */
+}
         .close{
         background:#ffffff;
         border:none;
@@ -244,16 +260,16 @@
         .item-price{
         position: relative;
          top:5px;
-      left:275px;
+      left:130px;
         }
         .total{
-         position: relative;
-         top:680px;
-      left:290px;
+          position: absolute;
+         top:820px;
+      left:280px;
         }
         .order-btn{
-        position: relative;
-         top:700px;
+        position: absolute;
+         top:900px;
       left:370px;
         width:100px;
   height:50px;
@@ -278,11 +294,7 @@
             <div class="main-box">
                 <div class="box">
                     <table class="box2">
-                        <colgroup>
-                            <col width="15%">
-                            <col width="70%">
-                            <col width="15%">
-                        </colgroup>
+
 
                         <thead>
                         <tr class="tr-box">
@@ -310,18 +322,18 @@
                                     <span th:id="'price_' + ${cartItem.cartItemId}" th:data-price="${cartItem.price}"
                                           th:text="${cartItem.price} + '원'" class="sellprice">
                                 </span>
-
+                                </div>
                                     <div class="count-Box">
                                 <span>
-                                <input type="number" name="count" th:id="'count_' + ${cartItem.cartItemId}"
+                                <input type="number" class="count" th:id="'count_' + ${cartItem.cartItemId}"
                                        th:value="${cartItem.count}" min="1" onchange="changeCount(this)">
-                                <button type="button" class="close" aria-label="Close">
+                                </span>
+                                        <button type="button" class="close" aria-label="Close">
                                     <span aria-hidden="true" th:data-id="${cartItem.cartItemId}"
                                           onclick="deleteCartItem(this)">&times;</span>
-                                </button>
-                                </span>
+                                        </button>
                                     </div>
-                                </div>
+
                             </td>
                             <td class="item-price">
                     <span th:id="'totalPrice_' + ${cartItem.cartItemId}" name="totalPrice"

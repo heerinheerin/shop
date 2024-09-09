@@ -24,16 +24,16 @@ public class MailService {
         MimeMessage message = emailsender.createMimeMessage();
 
         message.addRecipients(MimeMessage.RecipientType.TO, to);// 보내는 대상
-        message.setSubject("GoodJob 회원가입 이메일 인증");// 제목
+        message.setSubject("JETOY 회원가입 이메일 인증");// 제목
 
         String msgg = "";
         msgg += "<div style='margin:100px;'>";
         msgg += "<h1> 안녕하세요</h1>";
-        msgg += "<h1> 통합 꿈을 응원하는 GoodJob 입니다</h1>";
+        msgg += "<h1> 아이들의 꿈을 응원하는 조은 토이 입니다</h1>";
         msgg += "<br>";
         msgg += "<p>아래 코드를 회원가입 창으로 돌아가 입력해주세요<p>";
         msgg += "<br>";
-        msgg += "<p>항상 당신의 꿈을 응원합니다.!<p>";
+        msgg += "<p>사랑하는 우리 아이 즐거움은 조은 JE, 토이 TOY에서-!<p>";
         msgg += "<br>";
         msgg += "<div align='center' style='border:1px solid black; font-family:verdana';>";
         msgg += "<h3 style='color:blue;'>회원가입 인증 코드입니다.</h3>";
@@ -43,7 +43,7 @@ public class MailService {
         msgg += "</div>";
         message.setText(msgg, "utf-8", "html");// 내용, charset 타입, subtype
         // 보내는 사람의 이메일 주소, 보내는 사람 이름
-        message.setFrom(new InternetAddress("keejoo95@naver.com", "경고"));// 보내는 사람
+        message.setFrom(new InternetAddress("keejoo95@naver.com", "JE TOY"));// 보내는 사람
 
         return message;
     }

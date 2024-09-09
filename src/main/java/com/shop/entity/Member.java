@@ -40,6 +40,7 @@ public class Member extends BaseEntity{
         Member member = new Member();
         member.setName(memberFormDto.getName());
         member.setEmail(memberFormDto.getEmail());
+        member.setCallnum(memberFormDto.getCallnum());
 
         String password = passwordEncoder.encode(memberFormDto.getPassword());
         member.setPassword(password);
