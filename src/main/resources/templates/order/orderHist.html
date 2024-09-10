@@ -32,7 +32,18 @@
     dataType : "json",
     cache : false,
     success : function(result, status){
-    alert("주문이 취소 되었습니다");
+
+      var width = 500;
+           var height = 300;
+           var left = (window.innerWidth / 2) - (width / 2);
+           var top = (window.innerHeight / 2) - (height / 2);
+
+        window.open(
+            "/members/popup/cancle",
+            'pop',
+            `width=${width}px,height=${height}px,scrollbars=no,top=${top}px,left=${left}px`
+        );
+
     location.href='/orders/'+[[${page}]];
     },
     error : function(jqXHR, status, error){

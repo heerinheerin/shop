@@ -33,6 +33,26 @@ public class MemberController {
         return "member/memberForm";
     }
 
+    @GetMapping(value = "/popup/{str}")
+    public  String memberM(@PathVariable String str){
+        System.out.println("000000000000000000000000000");
+        if (str.equals("email")){
+            return "popup/emailp";
+        }else if(str.equals("cart")){
+            return "popup/cartp";
+        } else if (str.equals("order")) {
+            return "popup/orderp";
+        } else if (str.equals("cancle")) {
+            return "popup/canclep";
+        } else if (str.equals("email2")){
+            return "popup/email2p";
+        }
+        return "member/emailp";
+
+    }
+
+
+
     @PostMapping(value = "/new")
     public String memberForm(@Valid MemberFormDto memberFormDto, BindingResult bindingResult
             , Model model){
@@ -80,8 +100,9 @@ public class MemberController {
 
         confirm = mailService.sendSimpleMessage(email);
         System.out.println("인증코드 : " + confirm);
+        String jsonResponse = "{ \"message\": \"인증 메일을 보냈습니다.\" }";
 
-        return new ResponseEntity<String>("인증 메일을 보냈습니다.", HttpStatus.OK);
+        return new ResponseEntity<String>(jsonResponse, HttpStatus.OK);
     }
     @PostMapping("/{code}/codeCheck")
     public @ResponseBody ResponseEntity codefirm(@PathVariable("code")String code)
@@ -89,7 +110,8 @@ public class MemberController {
         System.out.println("악@@@@@@!!!");
         if (confirm.equals(code)) {
             confirmCheck=true;
-            return new ResponseEntity<String>("인증 성공", HttpStatus.OK);
+            String jsonResponse = "{ \"message\": \"인증을 성공했습니다\" }";
+            return new ResponseEntity<String>(jsonResponse, HttpStatus.OK);
         }
         return new ResponseEntity<String>("인증 코드를 올바르게 입력해주세요.", HttpStatus.BAD_REQUEST);
 

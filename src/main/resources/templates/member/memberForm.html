@@ -454,13 +454,24 @@ color: #dc941b;
                   contentType: "application/json",
                   data : param,
                   beforeSend: function (xhr) {
-                         alert("이메일 전송요청.");
                           xhr.setRequestHeader(header, token);
                   },
                   dataType: "json",
                   cache: false,
                   success: function (result, status) {
-                        alert(result);
+                  console.log("success")
+
+                   var width = 500;
+           var height = 300;
+           var left = (window.innerWidth / 2) - (width / 2);
+           var top = (window.innerHeight / 2) - (height / 2);
+
+        window.open(
+            "/members/popup/email",
+            'pop',
+            `width=${width}px,height=${height}px,scrollbars=no,top=${top}px,left=${left}px`
+        );
+
 
                   },
                   error : function(jqXHR, status, error){
@@ -500,7 +511,16 @@ color: #dc941b;
                   dataType: "json",
                   cache: false,
                   success: function (result, status) {
-                        alert(result);
+           var width = 500;
+           var height = 300;
+           var left = (window.innerWidth / 2) - (width / 2);
+           var top = (window.innerHeight / 2) - (height / 2);
+
+        window.open(
+            "/members/popup/email2",
+            'pop',
+            `width=${width}px,height=${height}px,scrollbars=no,top=${top}px,left=${left}px`
+        );
 
                   },
                   error : function(jqXHR, status, error){

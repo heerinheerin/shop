@@ -134,7 +134,12 @@
                     dataType: "json",
                     cache: false,
                     success: function (result, status) {
-                          alert("주문이 완료 되었습니다.");
+                     var width = 650;
+                     var height = 550;
+                     var left = (window.innerWidth / 2) - (width / 2);
+                     var top = (window.innerHeight / 2) - (height / 2);
+                         // alert("주문이 완료 되었습니다.");
+                         window.open("/members/popup/cart", 'pop', "width=650px, height=550px, scrollbar=no");
                           location.href='/orders';
                     },
                     error : function(jqXHR, status, error){
@@ -209,7 +214,7 @@
     border-image-slice: 1;
         margin-top:70px;
         display: flex;
-        gap: 250px;
+        gap: 230px;
       }
 
       .tbody{
@@ -218,8 +223,66 @@
       }
       .cartChkBox{
       position: relative;
-      left:70px;
+      left:65px;
       }
+      .checkbox {
+    /* 기본 스타일 제거 */
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    border: 2px solid transparent;
+    border-image: linear-gradient(50deg, #c8e6e9 50%, #fff8e2 50%);
+    border-image-slice: 1;
+    outline: none;
+    background-color: transparent;
+    /* 추가 스타일 */
+    width: 20px; /* 체크박스 크기 */
+    height: 20px;
+    cursor: pointer;
+}
+/* 체크 표시 */
+.checkbox:checked::before {
+    content: '✔'; /* 체크 표시 문자 */
+    text-align: center;
+font-size: 25px; /* 체크 표시 크기 */
+ position: absolute;
+    top: 27%;
+    left: 17%;
+    color:#c8e6e9;
+}
+
+
+.checkall{
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    border: 2px solid transparent;
+    border-image: linear-gradient(50deg, #c8e6e9 50%, #fff8e2 50%);
+    border-image-slice: 1;
+    outline: none;
+    background-color: transparent;
+    /* 추가 스타일 */
+    width: 15px; /* 체크박스 크기 */
+    height: 15px;
+    cursor: pointer;
+    margin-right: 25px;
+    margin-left:-12px;
+}
+
+/* 체크 표시 */
+.checkall:checked::before {
+    content: '✔'; /* 체크 표시 문자 */
+    text-align: center;
+font-size: 22px; /* 체크 표시 크기 */
+ position: absolute;
+    top: 3%;
+    left: 8.5%;
+    color:#c8e6e9;
+}
+
+
+
+
       .img{
        position: relative;
       left:90px;
@@ -228,7 +291,7 @@
       }
       .item-name{
        position: relative;
-      left:230px;
+      left:245px;
       font-size:20px;
       }
 
@@ -243,7 +306,6 @@
       }
 
 .count-Box {
-
     text-align:center;
        display: flex;
     align-items: center; /* 자식 요소를 세로로 중앙 정렬 */
@@ -252,15 +314,27 @@
     margin: 0;
     padding: 0; /* 필요에 따라 패딩을 조정 */
 }
+.count{
+gap: 10px;
+position:relative;
+        border:none;
+          top: 20px;
+             left: 10px;
+        text-align:center;
+        border-bottom:2px solid #c8e6e9;
+ width:200px;
+}
         .close{
+            position: relative;
         background:#ffffff;
         border:none;
+           top:15px;
         color:gray;
         }
         .item-price{
         position: relative;
-         top:5px;
-      left:130px;
+         top:-10px;
+      left:120px;
         }
         .total{
           position: absolute;
@@ -299,7 +373,8 @@
                         <thead>
                         <tr class="tr-box">
                             <td>
-                                <input type="checkbox" id="checkall" onclick="checkAll()">전체 선택</td>
+                                <input type="checkbox" class="checkall" id="checkall" onclick="checkAll()">
+                                <label for="checkall">전체 선택</label>
                             <td>상품 정보</td>
                             <td>상품 금액</td>
                         </tr>
@@ -308,7 +383,7 @@
                         <tbody class="tbody">
                         <tr th:each="cartItem : ${cartItems}">
                             <td class="cartChkBox">
-                                <input type="checkbox" name="cartChkBox" th:value="${cartItem.cartItemId}">
+                                <input type="checkbox" name="cartChkBox" class="checkbox" th:value="${cartItem.cartItemId}">
                             </td>
 
                             <td class="d-flex">

@@ -48,8 +48,18 @@
                 dataType: "json",
                 cache: false,
                 success: function (result, status) {
-                    alert("주문이 완료 되었습니다.");
-                    location.href='/';
+           var width = 500;
+           var height = 300;
+           var left = (window.innerWidth / 2) - (width / 2);
+           var top = (window.innerHeight / 2) - (height / 2);
+
+        window.open(
+            "/members/popup/order",
+            'pop',
+            `width=${width}px,height=${height}px,scrollbars=no,top=${top}px,left=${left}px`
+        );
+
+                    location.href='/orders';
                 },
                 error : function(jqXHR, status, error){
                     if(jqXHR.status == '401'){
@@ -87,8 +97,18 @@
                 dataType: "json",
                 cache: false,
                 success: function (result, status) {
-                    alert("상품을 장바구니에 담았습니다.");
-                    location.href='/';
+            var width = 500;
+           var height = 300;
+           var left = (window.innerWidth / 2) - (width / 2);
+           var top = (window.innerHeight / 2) - (height / 2);
+
+        window.open(
+            "/members/popup/cart",
+            'pop',
+            `width=${width}px,height=${height}px,scrollbars=no,top=${top}px,left=${left}px`
+        );
+
+                    location.href='/cart';
                 },
                 error: function (jqXHR, status, error) {
                     if (jqXHR.status == '401') {
@@ -141,18 +161,40 @@
         }
         .count{
          position:relative;
-         width:200px;
+         background:#fff8e2;
+         width:80px;
+         height:25px;
           display: flex;
            top: 140px;
-             left: 120px;
+             left: 130px;
+             display: flex;
         }
+        .count_text{
+        padding-left:22px;
+        }
+
+        #count{
+        position:relative;
+        border:none;
+          top: 112px;
+             left: 210px;
+        text-align:center;
+        border-bottom:3px solid #fff8e2;
+ width:100px;
+        }
+
 
 
         .price {
             position: absolute;
             display: flex;
             margin-top: 150px;
-            margin-left: 130px;
+            margin-left: 135px;
+        }
+        #totalPrice{
+        font-size:20px;
+        padding-left:15px;
+        color:	#dd7e6b;
         }
          .cart-button {
             position: absolute;
@@ -370,15 +412,14 @@ margin-top:20px;
                     <input type="hidden" th:value="${item.price}" id="price" name="price">
                     <span th:text="${item.price}"></span>원
                 </div>
-                <div class="count">
-                        <span class="input-group-text">수량</span>
-                    <input type="number" name="count" id="count" class="form-control" value="1" min="1">
-                </div>
+                <div class="count"> <span class="count_text">수량</span></div>
+                    <input type="number" name="count" id="count" value="1" min="1">
+
             </div>
 
             <div class="price">
                 <h5>결제 금액</h5>
-                <h3 name="totalPrice" id="totalPrice" class="font-weight-bold"></h3>
+                <h3 name="totalPrice" id="totalPrice"></h3>
             </div>
 
             <div class="cart-button" th:if="${item.itemSellStatus == T(com.shop.constant.ItemSellStatus).SELL}">
