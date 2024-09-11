@@ -17,6 +17,84 @@
             });
         });
 
+function openModal(message) {
+            console.log(message);
+         var modalMessageElement = document.getElementById('modalMessage'); // 고정된 id로 찾기
+            var modalBodyElement = document.querySelector('.modal-body');
+
+            if (modalMessageElement) {
+            console.log("1번================")
+                modalMessageElement.innerText += '\n' + message;
+                 modalMessageElement.innerText = message;// 메시지 이어붙이기
+            } else if (modalBodyElement) {
+             console.log("2번================")
+                console.error('모달 메시지 요소를 찾을 수 없습니다. 기본 메시지로 대체합니다.');
+                modalMessageElement = document.createElement('p');
+                modalMessageElement.innerText = message;
+<!--                modalBodyElement.appendChild(modalMessageElement); // modal-body에 새로운 메시지 추가-->
+            } else {
+                console.error('모달 본체(.modal-body)를 찾을 수 없습니다.');
+                return; // modal-body도 없으면 모달을 띄우지 않음
+            }
+
+            $('#alertModal').modal('show'); // Bootstrap 모달 열기
+        }
+
+        // 모달 닫기 함수
+        window.closeModal = function() {
+            $('#alertModal').modal('hide');
+        }
+
+        function closeConfirmModal() {
+    $('#confirmModal').modal('hide');
+}
+function openConfirmModal(message, onConfirm) {
+    // 메시지 설정
+    $('#confirmMessage').text(message);
+
+    // 확인 버튼에 이벤트 리스너 설정 (기존 리스너 제거 후 추가)
+    $('#confirmYesButton').off('click').on('click', function() {
+        onConfirm(); // 확인 버튼 클릭 시 실행할 콜백 함수
+        closeConfirmModal(); // 모달 닫기
+    });
+
+    // 모달 열기
+    $('#confirmModal').modal('show');
+}
+
+
+
+        function openModal2(message) {
+            console.log(message);
+         var modalMessageElement = document.getElementById('modalMessage2'); // 고정된 id로 찾기
+            var modalBodyElement = document.querySelector('.modal-body2');
+
+            if (modalMessageElement) {
+            console.log("1번================")
+                modalMessageElement.innerText += '\n' + message;
+                 modalMessageElement.innerText = message;// 메시지 이어붙이기
+            } else if (modalBodyElement) {
+             console.log("2번================")
+                console.error('모달 메시지 요소를 찾을 수 없습니다. 기본 메시지로 대체합니다.');
+                modalMessageElement = document.createElement('p');
+                modalMessageElement.innerText = message;
+<!--                modalBodyElement.appendChild(modalMessageElement); // modal-body에 새로운 메시지 추가-->
+            } else {
+                console.error('모달 본체(.modal-body2)를 찾을 수 없습니다.');
+                return; // modal-body도 없으면 모달을 띄우지 않음
+            }
+
+            $('#alertModal2').modal('show'); // Bootstrap 모달 열기
+        }
+
+        // 모달 닫기 함수
+        window.closeModal2 = function() {
+            $('#alertModal2').modal('hide');
+        }
+
+
+
+
         function calculateTotalPrice() {
             var count = $("#count").val();
             var price = $("#price").val();
@@ -25,6 +103,7 @@
         }
 
         function order() {
+
             var token = $("meta[name='_csrf']").attr("content");
             var header = $("meta[name='_csrf_header']").attr("content");
 
@@ -48,18 +127,9 @@
                 dataType: "json",
                 cache: false,
                 success: function (result, status) {
-           var width = 500;
-           var height = 300;
-           var left = (window.innerWidth / 2) - (width / 2);
-           var top = (window.innerHeight / 2) - (height / 2);
+openModal2('♥ 주문 감사합니다 ♥');
 
-        window.open(
-            "/members/popup/order",
-            'pop',
-            `width=${width}px,height=${height}px,scrollbars=no,top=${top}px,left=${left}px`
-        );
-
-                    location.href='/orders';
+                 /*  location.href='/orders'; */
                 },
                 error : function(jqXHR, status, error){
                     if(jqXHR.status == '401'){
@@ -97,18 +167,9 @@
                 dataType: "json",
                 cache: false,
                 success: function (result, status) {
-            var width = 500;
-           var height = 300;
-           var left = (window.innerWidth / 2) - (width / 2);
-           var top = (window.innerHeight / 2) - (height / 2);
+          openModal('♥ 즐거운 쇼핑하세요 ♥');
 
-        window.open(
-            "/members/popup/cart",
-            'pop',
-            `width=${width}px,height=${height}px,scrollbars=no,top=${top}px,left=${left}px`
-        );
-
-                    location.href='/cart';
+                   /* location.href='/cart'; */
                 },
                 error: function (jqXHR, status, error) {
                     if (jqXHR.status == '401') {
@@ -133,6 +194,31 @@
             width: 100%;
             height: 4500px;
         }
+              /*=================================모달=====================*/
+        .modal-body{
+        margin-left:23px;
+        }
+        .modal-body p{
+      margin-left:125px;
+        }
+
+          .modal-body2{
+         padding:20px;
+        margin-left:45px;
+        }
+        .modal-body2 p{
+      margin-left:110px;
+        }
+        .confirm-button{
+                  border:none;
+                  color:#808080;
+                   background:#fff8e2;
+                   }
+                   .confirm-button:hover{
+                   color:#c8e6e9;              
+                   }
+
+              /*=================================모달=====================*/
         .img1 {
             margin-top: -250px;
             margin-left: 470px;
@@ -206,7 +292,7 @@
            gap: 10px;
         }
         .cart-btn, .order-btn{
-        z-index:100000;
+        z-index:1000;
         position: relative;
          border: 2px solid #c8e6e9;
           border-radius: 5px;
@@ -390,9 +476,66 @@ margin-top:20px;
 </th:block>
 
 <div layout:fragment="content">
-    <input type="hidden" id="itemId" th:value="${item.id}">
 
+    <input type="hidden" id="itemId" th:value="${item.id}">
+    <div id="alertModal" class="modal" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <img src="/css/images/cart.png" height="100">
+                    <br>
+                    <p id="modalMessage">경고 메시지: </p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="confirm-button" onclick="closeModal()">
+                        닫기
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="alertModal2" class="modal" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-body2">
+                    <img src="/css/images/order1.png" height="70">
+                    <br>
+                    <p id="modalMessage2">경고 메시지: </p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="confirm-button" onclick="closeModal2()">
+                        닫기
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--   ============================= 모달 ==============================                -->
+    <div id="confirmModal" class="modal" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <!-- 확인 아이콘 -->
+                    <img src="/img/알림.png" alt="Confirm Icon" class="alert-icon">
+                    <br><br>
+                    <h3 id="confirmMessage">확인 메시지: </h3>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="confirm-button" id="confirmYesButton">
+                        <img src="/img/확인.png" alt="Yes Button">
+                    </button>
+                    <button type="button" class="confirm-button" onclick="closeConfirmModal()">
+                        <img src="/img/취소.png" alt="Cancel Button">
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<!--   ============================= 모달 ==============================                -->
     <div class="main-box">
+
         <div class="img1">
             <img th:src="${item.itemImgDtoList[0].imgUrl}" class="rounded repImg" th:alt="${item.itemNm}">
         </div>
@@ -413,7 +556,7 @@ margin-top:20px;
                     <span th:text="${item.price}"></span>원
                 </div>
                 <div class="count"> <span class="count_text">수량</span></div>
-                    <input type="number" name="count" id="count" value="1" min="1">
+                <input type="number" name="count" id="count" value="1" min="1">
 
             </div>
 
@@ -421,6 +564,7 @@ margin-top:20px;
                 <h5>결제 금액</h5>
                 <h3 name="totalPrice" id="totalPrice"></h3>
             </div>
+
 
             <div class="cart-button" th:if="${item.itemSellStatus == T(com.shop.constant.ItemSellStatus).SELL}">
                 <button type="button" class="cart-btn" onclick="addCart()">장바구니 담기</button>
@@ -437,13 +581,14 @@ margin-top:20px;
 
     <div class="box2">
 
-            <p class="box2-text">상품 상세 설명</p>
-            <p class="lead" th:text="${item.itemDetail}"></p>
+        <p class="box2-text">상품 상세 설명</p>
+        <p class="lead" th:text="${item.itemDetail}"></p>
         <img th:src="${item.itemImgDtoList[1].imgUrl}" class="imgbox" th:alt="${item.itemNm}">
         <img th:src="${item.itemImgDtoList[2].imgUrl}" class="imgbox2" th:alt="${item.itemNm}">
         <img th:src="${item.itemImgDtoList[3].imgUrl}" class="imgbox3" th:alt="${item.itemNm}">
-            <div th:each="itemImg : ${item.itemImgDtoList}">
+        <div th:each="itemImg : ${item.itemImgDtoList}">
         </div>
     </div>
+
 </div>
 </html>

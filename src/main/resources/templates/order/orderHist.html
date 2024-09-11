@@ -21,6 +21,34 @@
 
     var param = JSON.stringify(paramData);
 
+     function openModal(message) {
+            console.log(message);
+         var modalMessageElement = document.getElementById('modalMessage'); // 고정된 id로 찾기
+            var modalBodyElement = document.querySelector('.modal-body');
+
+            if (modalMessageElement) {
+            console.log("1번================")
+                modalMessageElement.innerText += '\n' + message;
+                 modalMessageElement.innerText = message;// 메시지 이어붙이기
+            } else if (modalBodyElement) {
+             console.log("2번================")
+                console.error('모달 메시지 요소를 찾을 수 없습니다. 기본 메시지로 대체합니다.');
+                modalMessageElement = document.createElement('p');
+                modalMessageElement.innerText = message;
+<!--                modalBodyElement.appendChild(modalMessageElement); // modal-body에 새로운 메시지 추가-->
+            } else {
+                console.error('모달 본체(.modal-body)를 찾을 수 없습니다.');
+                return; // modal-body도 없으면 모달을 띄우지 않음
+            }
+
+            $('#alertModal').modal('show'); // Bootstrap 모달 열기
+        }
+
+        // 모달 닫기 함수
+        window.closeModal = function() {
+            $('#alertModal').modal('hide');
+        }
+
     $.ajax({
     url : url,
     type : "POST",
@@ -33,18 +61,9 @@
     cache : false,
     success : function(result, status){
 
-      var width = 500;
-           var height = 300;
-           var left = (window.innerWidth / 2) - (width / 2);
-           var top = (window.innerHeight / 2) - (height / 2);
+    openModal('♥ 다른 상품도 구경해보세요 ♥');
 
-        window.open(
-            "/members/popup/cancle",
-            'pop',
-            `width=${width}px,height=${height}px,scrollbars=no,top=${top}px,left=${left}px`
-        );
-
-    location.href='/orders/'+[[${page}]];
+  //  location.href='/orders/'+[[${page}]];
     },
     error : function(jqXHR, status, error){
     if(jqXHR.status == '401'){
@@ -70,6 +89,23 @@
         top: 250px;
 
     }
+     /*=================================모달=====================*/
+        .modal-body{
+        margin-left:23px;
+        }
+        .modal-body p{
+      margin-left:95px;
+        }
+         .confirm-button{
+                  border:none;
+                  color:#808080;
+                   background:#fff8e2;
+                   }
+                   .confirm-button:hover{
+                   color:#c8e6e9;
+                   }
+
+              /*=================================모달=====================*/
        .main2 p{
     z-index:1;
       background-color: #ffffff;
@@ -113,10 +149,15 @@
    padding:30px;
 margin-bottom:-15px;
         }
+        .card h4{
+        position: relative;
+         top:32px;
+      left:97px;
+        }
           .btn{
      position: relative;
      z-index:1;
-         top:130px;
+         top:110px;
       left:650px;
         width:100px;
   height:50px;
@@ -155,7 +196,7 @@ margin-bottom:-15px;
    position: relative;
          top:60px;
         color: #c8e6e9;
-        margin-left: 300px;
+        margin-left: 215px;
         background: none;
     }
      .toy {
@@ -219,38 +260,54 @@ margin-bottom:-15px;
 
 <div layout:fragment="content">
   <div class="main">
+    <div id="alertModal" class="modal" tabindex="-1" role="dialog">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-body">
+            <img src="/css/images/orderc.png" height="100">
+            <br>
+            <p id="modalMessage">경고 메시지: </p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="confirm-button" onclick="closeModal()">
+              닫기
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
     <div class="main2">
       <p>구매 이력</p>
       <div class="main-box">
         <div class="box">
 
-  <div  th:each="order : ${orders.getContent()}">
-    <div>
-      <h4 class="date" th:text="${order.orderDate} + '주문'"></h4>
-    </div>
-    <th:block th:if="${order.orderStatus == T(com.shop.constant.OrderStatus).ORDER}">
-      <button type="button" class="btn" th:value="${order.orderId}"
-              onclick="cancelOrder(this.value)">주문취소</button>
-    </th:block>
+          <div  th:each="order : ${orders.getContent()}">
+            <div>
+              <h4 class="date" th:text="${order.orderDate} + '주문'"></h4>
+            </div>
+            <th:block th:if="${order.orderStatus == T(com.shop.constant.OrderStatus).ORDER}">
+              <button type="button" class="btn" th:value="${order.orderId}"
+                      onclick="cancelOrder(this.value)">주문취소</button>
+            </th:block>
 
-    <div class="card">
-      <div th:each="orderItem : ${order.orderItemDtoList}" class="d-flex mb-3">
-        <div class="repImgDiv">
-          <img th:src="${orderItem.imgUrl}" class="rounded repImg" th:alt="${orderItem.itemNm}">
-        </div>
+            <div class="card">
+              <div th:each="orderItem : ${order.orderItemDtoList}" class="d-flex mb-3">
+                <div class="repImgDiv">
+                  <img th:src="${orderItem.imgUrl}" class="rounded repImg" th:alt="${orderItem.itemNm}">
+                </div>
 
-          <span class="name" th:text="${orderItem.itemNm}"></span>
+                <span class="name" th:text="${orderItem.itemNm}"></span>
 
-          <div class="price">
-            <span th:text="${orderItem.orderPrice} + '원'"></span>
-            <span th:text="${orderItem.count} + '개'"></span>
+                <div class="price">
+                  <span th:text="${orderItem.orderPrice} + '원'"></span>
+                  <span th:text="${orderItem.count} + '개'"></span>
+                </div>
+
+                <th:block th:unless="${order.orderStatus == T(com.shop.constant.OrderStatus).ORDER}">
+                  <h4>(취소 완료)</h4> </th:block>
+              </div>
+            </div>
           </div>
-
-        <th:block th:unless="${order.orderStatus == T(com.shop.constant.OrderStatus).ORDER}">
-          <h4>(취소 완료)</h4> </th:block>
-      </div>
-    </div>
-  </div>
         </div>
 
         <div class="last-btn" th:with="start=${(orders.number/maxPage)*maxPage +1},
@@ -275,23 +332,8 @@ margin-bottom:-15px;
         </div>
       </div>
 
-      </div>
+    </div>
 
-      </div>
+  </div>
 </div>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

@@ -118,6 +118,12 @@
       position: relative;
       left:205px;
       text-align:center;
+
+      }
+      .name-tx{
+       color:	#808080;
+      border-bottom:3px solid #fff8e2;
+       text-decoration:none;
       }
         .sell{
          position: relative;
@@ -252,7 +258,7 @@ background:none;
             <tbody class="tbody">
             <tr th:each="item, status : ${items.getContent()}">
                 <td class="name">
-                    <a class="member" th:href="'/admin/item/'+${item.id}" th:text="${item.itemNm}"></a>
+                    <a class="name-tx" th:href="'/admin/item/'+${item.id}" th:text="${item.itemNm}"></a>
                 </td>
                 <td class="itemNm" th:text="${item.id}"></td>
                 <td class="sell" th:text="${item.itemSellStatus == T(com.shop.constant.ItemSellStatus).SELL} ? '판매중' : '품절' "></td>
