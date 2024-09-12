@@ -27,6 +27,7 @@ public class CartController {
     public @ResponseBody
     ResponseEntity order(@RequestBody @Valid CartItemDto cartItemDto,
                          BindingResult bindingResult, Principal principal) {
+
         if (bindingResult.hasErrors()) {
             StringBuilder sb = new StringBuilder();
             List<FieldError> fieldErrors = bindingResult.getFieldErrors();
@@ -47,6 +48,11 @@ public class CartController {
 
     @GetMapping(value = "/cart")
     public String orderHist(Principal principal, Model model) {
+
+        if (principal==null){
+            return "member/memberLoginForm";
+        }
+
         List<CartDetailDto> cartDetailDtoList = cartService.getCartList(principal.getName());
         model.addAttribute("cartItems", cartDetailDtoList);
         return "cart/cartList";
