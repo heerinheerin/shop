@@ -1,0 +1,38 @@
+{
+	"folders": [
+		{
+			"path": "../../Users/tj-bu-707-13/Desktop/projectcss/.vscode"
+		},
+		{
+			"path": "../../Users/tj-bu-707-13/Desktop/projectcss/Day01"
+		},
+		{
+			"path": "../../Users/tj-bu-707-13/Desktop/projectcss/Day02"
+		},
+		{
+			"path": "../../Users/tj-bu-707-13/Desktop/projectcss/Day03"
+		},
+		{
+			"path": "../../Users/tj-bu-707-13/Desktop/projectcss/Day04"
+		},
+		{
+			"path": "../../Users/tj-bu-707-13/Desktop/projectcss/Day05"
+		},
+		{
+			"path": "../../Users/tj-bu-707-13/Desktop/projectcss/Day06"
+		},
+		{
+			"path": "../../Users/tj-bu-707-13/Desktop/projectcss/Day07"
+		},
+		{
+			"path": "../../Users/tj-bu-707-13/Desktop/projectcss/DAY08"
+		},
+		{
+			"path": "../../Users/tj-bu-707-13/Desktop/projectcss/project"
+		}
+	],
+	"settings": {
+		"liveServer.settings.multiRootWorkspaceName": "project",
+		"liveServer.settings.port": 5501
+	}
+}
