@@ -25,6 +25,12 @@ left:190px;
 left:190px;
 }
 
+@media (min-width: 769px) and (max-width: 1024px){
+                .footer{
+                left:-120px;
+}
+                }
+
 .content{
  font-family: "Noto Sans KR", sans-serif;
   font-optical-sizing: auto;
